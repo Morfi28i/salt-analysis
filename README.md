@@ -1,17 +1,20 @@
 # Salt Analysis Bench | التحليل الكيفي للأملاح
 
-A visual reference for qualitative salt analysis. It covers the acidic and basic radical schemes, with every confirmatory test drawn as the test tube, fumes or flame you would see in the lab.
+An interactive reference for qualitative salt analysis. It covers the acidic and basic radical schemes, with every confirmatory test drawn as the test tube, fumes or flame you would see in the lab.
 
 **Live page:** https://morfi28i.github.io/salt-analysis/
 
 ## Features
 
+- **Virtual lab:** answer what you see at each group reagent and get walked to the radical and its confirmatory tests
+- **Test yourself:** a quiz that shows a result and asks which radical gives it, with a running score
+- **Search:** filter tests by radical, reagent or result
 - **Acidic radicals:** groups I–III, with the gas evolved and the confirmatory tests for each radical
 - **Basic radicals:** groups I–VI, with group reagents, group precipitates and confirmatory tests
 - **Reagent ladders:** the order of group separation at a glance
 - **Find by colour:** pick a precipitate or flame colour to highlight every test that gives it
 - **Arabic / English toggle:** full right-to-left Arabic version
-- **Light and dark themes:** follows your system setting
+- **Light and dark themes:** follows your system setting, with a manual switch
 - **Works on phones**
 
 ## Usage
@@ -24,4 +27,4 @@ Transcribed from handwritten study notes. Items marked in italics were unclear i
 
 ---
 
-مرجع مرئي للتحليل الكيفي للأملاح يغطي الشقوق الحامضية والقاعدية. كل كشف تأكيدي مرسوم كما يظهر في أنبوبة الاختبار، والصفحة متاحة بالعربية والإنجليزية.
+مرجع تفاعلي للتحليل الكيفي للأملاح، يضم معملًا افتراضيًا واختبارًا ذاتيًا، و يغطي الشقوق الحامضية والقاعدية. كل كشف تأكيدي مرسوم كما يظهر في أنبوبة الاختبار، والصفحة متاحة بالعربية والإنجليزية.

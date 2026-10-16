@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Visual guide to qualitative salt analysis: acidic and basic radicals, group reagents and confirmatory tests, in English and Arabic.">
+<meta name="description" content="Interactive guide to qualitative salt analysis: a virtual lab, every confirmatory test drawn as you see it, search, colour finder and quiz. English and Arabic.">
+<meta property="og:title" content="Salt Analysis Bench">
+<meta property="og:description" content="Identify acidic and basic radicals step by step, with every test drawn as you see it in the lab.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M12 4h8M13.5 4v8.5L6.3 25.2A3 3 0 0 0 8.9 29.6h14.2a3 3 0 0 0 2.6-4.4L18.5 12.5V4%22 fill=%22none%22 stroke=%22%230d6f8a%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M9.6 20.5h12.8l2 3.8a1.6 1.6 0 0 1-1.4 2.4H9a1.6 1.6 0 0 1-1.4-2.4z%22 fill=%22%230d6f8a%22/%3E%3C/svg%3E">
 <title>Salt Analysis Bench</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
@@ -11,7 +14,7 @@
 /* Layout: lab bench — each scheme opens with a reagent ladder, then every radical is a card of test tubes showing the real colour you see */
 :root{
   --bg:#eef3f5; --surface:#ffffff; --ink:#13232f; --muted:#5b6f7c; --line:#d3dee4;
-  --accent:#0d6f8a; --amber:#b86e0c; --hit:#c0362c;
+  --accent:#0d6f8a; --amber:#b86e0c; --hit:#c0362c; --ok:#1f8a4c;
   --glass:#4b6170; --liq:#cfe6f0; --salt:#b7b2a6; --edge:#7d8f99;
   --f-display:'Bricolage Grotesque',system-ui,sans-serif;
   --f-body:'Atkinson Hyperlegible',system-ui,sans-serif;
@@ -19,25 +22,89 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0d1519; --surface:#152128; --ink:#e3edf1; --muted:#93a8b3; --line:#26363f;
-  --accent:#4fb6d3; --amber:#e3a043; --hit:#ff7a6b;
+  --accent:#4fb6d3; --amber:#e3a043; --hit:#ff7a6b; --ok:#5fd08a;
   --glass:#a9bfca; --liq:#2a4552; --salt:#8b867c; --edge:#a9bfca; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0d1519; --surface:#152128; --ink:#e3edf1; --muted:#93a8b3; --line:#26363f;
-  --accent:#4fb6d3; --amber:#e3a043; --hit:#ff7a6b;
+  --accent:#4fb6d3; --amber:#e3a043; --hit:#ff7a6b; --ok:#5fd08a;
   --glass:#a9bfca; --liq:#2a4552; --salt:#8b867c; --edge:#a9bfca; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
-.wrap{max-width:1180px;margin:0 auto}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.muted{color:var(--muted)}
 sub,sup{font-size:.7em;line-height:0}
-header{padding-block:36px 18px;display:flex;flex-wrap:wrap;align-items:end;gap:8px 24px;justify-content:space-between}
+/* site chrome */
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topbar .wrap{height:60px;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:18px;white-space:nowrap}
+.brand svg{width:28px;height:28px;color:var(--ink)}
+.links{display:flex;gap:2px;margin-inline-start:auto}
+.links a{color:var(--muted);text-decoration:none;font-weight:700;font-size:14px;padding:7px 12px;border-radius:8px}
+.links a:hover{color:var(--ink);background:var(--surface)}
+.tools{display:flex;gap:8px;align-items:center}
+.icon-btn{width:38px;height:38px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0}
+.icon-btn svg{width:18px;height:18px}
+@media (max-width:860px){.links{display:none}.tools{margin-inline-start:auto}}
+.hero{padding-block:56px 32px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr);padding-block:32px 16px;gap:24px}}
+.eyebrow{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:10px}
+.lede{font-size:18px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font:inherit;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;border:1.5px solid var(--accent);transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.pri{background:var(--accent);color:var(--surface)}
+.btn.alt{background:transparent;color:var(--accent)}
+.btn.ghost{border-color:var(--line);color:var(--muted);background:transparent}
+.btn:focus-visible,.opt:focus-visible,.icon-btn:focus-visible,.links a:focus-visible,.search input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stats{display:flex;flex-wrap:wrap;gap:32px;margin-top:32px}
+.stats b{display:block;font-family:var(--f-display);font-size:34px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.stats span{color:var(--muted);font-size:13px}
+.rack{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:36px 16px 22px;display:flex;justify-content:center;align-items:end;gap:2px;position:relative;overflow:hidden}
+.rack svg{width:12%;max-width:58px;height:auto;position:relative;z-index:1}
+.rack::after{content:"";position:absolute;inset-inline:16px;bottom:30px;height:12px;border-radius:4px;background:var(--glass);opacity:.3}
+.sec{padding-block:56px 8px;scroll-margin-top:70px}
+.sec-h{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:20px}
+.sec-h h2{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,4vw,40px);margin:0;letter-spacing:-.01em}
+.sec-h p{color:var(--muted);margin:6px 0 0;max-width:62ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:18px;min-height:220px}
+.trail{display:flex;flex-wrap:wrap;gap:6px}
+.trail span{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--bg);color:var(--muted)}
+.trail span.pos{color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.q{font-size:20px;font-weight:700;margin:0;text-wrap:balance}
+.q .rg{color:var(--amber)}
+.okc{color:var(--ok)}.hitc{color:var(--hit)}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:start;font:inherit;color:var(--ink);padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);cursor:pointer;transition:border-color .15s,transform .15s}
+.opt:hover:not([disabled]){border-color:var(--accent);transform:translateY(-1px)}
+.opt[disabled]{cursor:default}
+.opt svg{flex:none;width:44px;height:auto}.opt svg.w2{width:88px}
+.opt .big{font-family:var(--f-display);font-size:22px}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--bg))}
+.opt.wrong{border-color:var(--hit);background:color-mix(in srgb,var(--hit) 12%,var(--bg))}
+.result{max-width:560px}
+.qv{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.qv svg{flex:none;width:64px;height:auto}.qv svg.w2{width:128px}
+.qv em{font-style:normal;font-weight:700;color:var(--hit)}
+.score{font-family:var(--f-display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:6px}
+.search{flex:1 1 280px;max-width:460px;position:relative;display:block}
+.search svg{position:absolute;inset-inline-start:15px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--muted)}
+.search input{width:100%;font:inherit;padding:12px 18px;padding-inline-start:44px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.empty{color:var(--muted);padding:24px 0}
+.site-foot{border-top:1px solid var(--line);margin-top:64px;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px))}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+.site-foot a{color:var(--accent);font-weight:700}
 h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6vw,60px);line-height:1;margin:0;letter-spacing:-.02em;text-wrap:balance}
 h1 span{color:var(--accent)}
 .ar{font-family:var(--f-ar);color:var(--muted);font-size:18px;direction:rtl}
 .lede{color:var(--muted);max-width:62ch;margin:6px 0 0}
 .key{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin-top:10px}
 .key b{color:var(--ink)}
-nav.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav.jump{position:sticky;top:calc(env(safe-area-inset-top,0px) + 61px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 nav.jump a{flex:none;text-decoration:none;color:var(--ink);font-size:13px;font-weight:700;padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
 nav.jump a.s{color:#fff;background:var(--accent);border-color:var(--accent)}
 nav.jump a:focus-visible,.chip:focus-visible,.step:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -64,7 +131,8 @@ section.scheme{margin-top:40px}
 .arrow svg{width:24px;height:12px}
 @media (max-width:720px){.ladder{flex-direction:column}.arrow{flex-basis:26px;flex-direction:row;gap:6px}.arrow svg{transform:rotate(90deg)}}
 
-.group{margin-top:30px;scroll-margin-top:64px}
+.group{margin-top:30px;scroll-margin-top:130px}
+.scheme{scroll-margin-top:130px}
 .ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;border-top:2px solid var(--ink);padding-top:10px;margin-bottom:12px}
 .ghead h3{font-family:var(--f-display);font-weight:800;font-size:28px;margin:0}
 .ghead .rg{font-weight:700;color:var(--amber)}
@@ -113,36 +181,71 @@ section.scheme{margin-top:40px}
 .bb{animation:bub 1.6s linear infinite}
 .flm{transform-origin:20px 84px;animation:flick 1.2s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.fume,.bb,.flm{animation:none}}
-footer{margin-top:40px;color:var(--muted);font-size:13px}
-.lang{font:inherit;font-weight:700;font-size:15px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--accent);background:var(--surface);color:var(--accent);cursor:pointer;align-self:start}
+.lang{font:inherit;font-weight:700;font-size:14px;padding:7px 14px;border-radius:999px;border:1.5px solid var(--accent);background:var(--surface);color:var(--accent);cursor:pointer;align-self:start}
 .lang:hover{background:var(--accent);color:var(--surface)}
 .lang:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 html[dir="rtl"]{--f-display:'IBM Plex Sans Arabic',system-ui,sans-serif;--f-body:'IBM Plex Sans Arabic',system-ui,sans-serif}
-html[dir="rtl"] h1,html[dir="rtl"] .ghead h3,html[dir="rtl"] .scheme>h2,html[dir="rtl"] .step .gp{font-weight:700;letter-spacing:0}
+html[dir="rtl"] .sec-h h2,html[dir="rtl"] .brand,html[dir="rtl"] .stats b,html[dir="rtl"] h1,html[dir="rtl"] .ghead h3,html[dir="rtl"] .scheme>h2,html[dir="rtl"] .step .gp{font-weight:700;letter-spacing:0}
 html[dir="rtl"] .ar{display:none}
 html[dir="rtl"] .step .mem{text-align:right}
 html[dir="rtl"] .arrow svg{transform:scaleX(-1)}
-html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,html[dir="rtl"] .ct{letter-spacing:0}
+html[dir="rtl"] .eyebrow,html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,html[dir="rtl"] .ct{letter-spacing:0}
 @media (max-width:720px){html[dir="rtl"] .arrow svg{transform:rotate(90deg)}}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-<header>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8M13.5 4v8.5L6.3 25.2A3 3 0 0 0 8.9 29.6h14.2a3 3 0 0 0 2.6-4.4L18.5 12.5V4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M9.6 20.5h12.8l2 3.8a1.6 1.6 0 0 1-1.4 2.4H9a1.6 1.6 0 0 1-1.4-2.4z" fill="var(--accent)"/></svg><span data-ar="تحليل الأملاح">Salt Analysis</span></a>
+  <nav class="links" aria-label="Sections">
+    <a href="#lab" data-ar="المعمل الافتراضي">Virtual lab</a><a href="#acid" data-ar="الشقوق الحامضية">Acidic</a><a href="#base" data-ar="الشقوق القاعدية">Basic</a><a href="#quiz" data-ar="اختبر نفسك">Quiz</a>
+  </nav>
+  <div class="tools">
+    <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark theme"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+    <button class="lang" id="lang" type="button" lang="ar">عربي</button>
+  </div>
+</div></header>
+
+<div class="wrap" id="top">
+<section class="hero">
   <div>
+    <div class="eyebrow" data-ar="التحليل الكيفي غير العضوي">Qualitative inorganic analysis</div>
     <h1 data-ar="التحليل <span>الكيفي للأملاح</span>">Salt Analysis <span>Bench</span></h1>
     <div class="ar">الكشف عن الشقوق الحامضية والقاعدية</div>
-    <p class="lede" data-ar="جميع كشوف المذكرات مرسومة كما تظهر في أنبوبة الاختبار داخل المعمل. اختر لونًا من الأسفل لعرض كل الكشوف التي تعطي هذا اللون.">Every test from the notes, drawn as the tube you would see on the bench. Tap a colour below to find every test that gives it.</p>
-    <div class="key" data-ar="<span><b>C.T.</b> كشف تأكيدي</span><span><b>ppt</b> راسب</span><span><b>gp</b> مجموعة</span><span><b dir='ltr'>+ve / −ve</b> تفاعل موجب / سالب</span>"><span><b>C.T.</b> confirmatory test</span><span><b>ppt</b> precipitate</span><span><b>gp</b> group</span><span><b>+ve / −ve</b> reaction seen / not seen</span></div>
+    <p class="lede" data-ar="تعرّف على أي شق حامضي أو قاعدي خطوة بخطوة. كل كشف تأكيدي مرسوم كما يظهر في الأنبوبة أو اللهب داخل المعمل.">Identify any acidic or basic radical step by step. Every confirmatory test is drawn as the tube, fumes or flame you see on the bench.</p>
+    <div class="cta"><a class="btn pri" href="#lab" data-ar="ابدأ التعرّف على ملح">Identify a salt</a><a class="btn alt" href="#tests" data-ar="تصفّح الكشوف">Browse all tests</a></div>
+    <div class="stats" id="stats"></div>
   </div>
-  <button class="lang" id="lang" type="button" lang="ar">عربي</button>
-</header>
-<nav class="jump" id="jump"></nav>
-<div class="index"><h3 data-ar="ابحث باللون">Find by colour</h3><div class="chips" id="chips"></div></div>
-<main id="main"></main>
-<footer data-ar="منقولة من مذكرات دراسية مكتوبة بخط اليد. العناصر المكتوبة بخط مائل كانت غير واضحة في الأصل.">Transcribed from handwritten study notes. Items marked in italics were unclear in the original.</footer>
+  <div class="rack" id="rack" aria-hidden="true"></div>
+</section>
+
+<section class="sec" id="lab">
+  <div class="sec-h"><div><h2 data-ar="المعمل الافتراضي">Virtual lab</h2><p data-ar="أجب بحسب ما تراه في الأنبوبة، وسيقودك المعمل عبر كواشف المجموعات حتى الشق والكشوف التأكيدية المناسبة.">Answer with what you see in the tube. The lab walks you through the group reagents to the radical and its confirmatory tests.</p></div></div>
+  <div class="panel" id="labBox" aria-live="polite"></div>
+</section>
+
+<section class="sec" id="tests">
+  <div class="sec-h"><div><h2 data-ar="دليل الكشوف">Test reference</h2><p data-ar="ابحث باسم الشق أو الكاشف أو النتيجة، أو اختر لونًا لعرض كل الكشوف التي تعطيه.">Search by radical, reagent or result, or pick a colour to highlight every test that gives it.</p></div></div>
+  <div class="toolbar"><label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="q" type="search" autocomplete="off" aria-label="Search tests" placeholder="Search: Fe3+, KI, brown ring…" data-ph-ar="ابحث: Fe3+، KI، حلقة بنية…"></label></div>
+  <div class="key" data-ar="<span><b>C.T.</b> كشف تأكيدي</span><span><b>ppt</b> راسب</span><span><b>gp</b> مجموعة</span><span><b dir='ltr'>+ve / −ve</b> تفاعل موجب / سالب</span>"><span><b>C.T.</b> confirmatory test</span><span><b>ppt</b> precipitate</span><span><b>gp</b> group</span><span><b>+ve / −ve</b> reaction seen / not seen</span></div>
+  <div class="index"><h3 data-ar="ابحث باللون">Find by colour</h3><div class="chips" id="chips"></div></div>
+</section>
+<div class="ref">
+  <nav class="jump" id="jump" aria-label="Groups"></nav>
+  <p class="empty" id="empty" hidden data-ar="لا توجد كشوف مطابقة للبحث.">No tests match your search.</p>
+  <main id="main"></main>
 </div>
+
+<section class="sec" id="quiz">
+  <div class="sec-h"><div><h2 data-ar="اختبر نفسك">Test yourself</h2><p data-ar="انظر إلى النتيجة واختر الشق الذي يعطيها.">Look at the result and pick the radical that gives it.</p></div><div class="score" id="score"></div></div>
+  <div class="panel" id="quizBox" aria-live="polite"></div>
+</section>
+</div>
+
+<footer class="site-foot"><div class="wrap">
+  <span data-ar="منقولة من مذكرات دراسية مكتوبة بخط اليد. العناصر المكتوبة بخط مائل كانت غير واضحة في الأصل.">Transcribed from handwritten study notes. Items in italics were unclear in the original.</span>
+  <a href="https://github.com/Morfi28i/salt-analysis">GitHub</a>
+</div></footer>
 
 <script>
 const C={
@@ -385,6 +488,126 @@ chips.addEventListener('click',e=>{
   if(on){b.setAttribute('aria-pressed','true');main.querySelector('.tests li.on')?.scrollIntoView({behavior:'smooth',block:'center'})}
 });
 langBtn.addEventListener('click',()=>{AR=!AR;try{localStorage.setItem('salt-lang',AR?'ar':'en')}catch(e){}render()});
+
+/* ---------- site: stats, virtual lab, quiz, search, theme ---------- */
+Object.assign(U.en,{statR:'radicals covered',statT:'confirmatory tests',statC:'result colours',labStart:'Which kind of radical are you looking for?',
+ acidBtn:'Acidic radical (anion)',baseBtn:'Basic radical (cation)',add:'Add',qGas:'Do you see gas or fumes?',qPpt:'Does a precipitate form?',qBa:'Does a white precipitate form?',
+ yes:'Yes, +ve',no:'No, −ve',pick:'Which of these matches what you see?',splitQ:'Add dil. HCl to the white precipitate. What happens?',dis:'The precipitate dissolves',stay:'The precipitate stays',
+ disRes:'PO4{3-} phosphate or BO3{3-} borate',stayRes:'SO4{2-} sulphate',found:'Likely radical',confirm:'Run these confirmatory tests to be sure.',
+ noneAcid:'No acidic radical detected in groups I–III.',endBase:'No precipitate with any group reagent. The cation is in group VI:',back:'Back',reset:'Start over',
+ quizQ:'Which radical gives this result?',next:'Next question',right:'Correct',wrong:'Not quite. The answer is',scoreL:'Score',theme:'Switch light or dark theme',search:'Search tests'});
+Object.assign(U.ar,{statR:'شقًا مشروحًا',statT:'كشفًا تأكيديًا',statC:'لونًا للنتائج',labStart:'عن أي نوع من الشقوق تبحث؟',
+ acidBtn:'شق حامضي (أنيون)',baseBtn:'شق قاعدي (كاتيون)',add:'أضف',qGas:'هل يتصاعد غاز أو أبخرة؟',qPpt:'هل يتكون راسب؟',qBa:'هل يتكون راسب أبيض؟',
+ yes:'نعم، +ve',no:'لا، −ve',pick:'أي من هذه الملاحظات تطابق ما تراه؟',splitQ:'أضف HCl المخفف إلى الراسب الأبيض. ماذا يحدث؟',dis:'يذوب الراسب',stay:'يبقى الراسب',
+ disRes:'PO4{3-} فوسفات أو BO3{3-} بورات',stayRes:'SO4{2-} كبريتات',found:'الشق المتوقع',confirm:'أجرِ هذه الكشوف التأكيدية للتأكد.',
+ noneAcid:'لم يُكتشف شق حامضي في المجموعات I–III.',endBase:'لا يتكون راسب مع أي كاشف مجموعة. الكاتيون من المجموعة السادسة:',back:'رجوع',reset:'ابدأ من جديد',
+ quizQ:'أي شق يعطي هذه النتيجة؟',next:'السؤال التالي',right:'إجابة صحيحة',wrong:'إجابة غير صحيحة. الإجابة هي',scoreL:'النتيجة',theme:'التبديل بين الوضع الفاتح والداكن',search:'ابحث في الكشوف'});
+
+document.getElementById('rack').innerHTML=[P('Y'),G('BR'),S('BL'),R('BR'),P('LB'),F('AG'),P('K'),P('RBr')].map(draw).join('');
+
+// virtual lab
+const labBox=document.getElementById('labBox');
+const fresh=()=>({s:null,gi:0,st:'ask',ion:null,res:null,trail:[]});
+let lab=fresh(), hist=[];
+const gsOf=s=>s==='acid'?ACID:BASE;
+function labGo(ch){hist.push(JSON.stringify(lab));Object.assign(lab,ch);labRender();labBox.scrollIntoView({block:'nearest',behavior:'smooth'})}
+function labRender(){
+  let h='';
+  if(lab.trail.length) h+=`<div class="trail">${lab.trail.map(t=>`<span class="${t.p?'pos':''}">${fx(t.g)} <bdi dir="ltr">${t.p?'+ve':'−ve'}</bdi></span>`).join('')}</div>`;
+  const g=lab.s&&gsOf(lab.s)[lab.gi];
+  if(!lab.s){
+    h+=`<p class="q">${u('labStart')}</p><div class="opts"><button class="opt" data-a="s:acid">${draw(G('BR'))}<b>${u('acidBtn')}</b></button><button class="opt" data-a="s:base">${draw(P('Y'))}<b>${u('baseBtn')}</b></button></div>`;
+  } else if(lab.st==='ask'){
+    if(g.end) h+=`<p class="q">${u('endBase')}</p><div class="end">${g.mem.map(m=>`<span dir="ltr">${fx(m)}</span>`).join('')}</div>`;
+    else{
+      const q=lab.s==='acid'?(g.split?u('qBa'):u('qGas')):u('qPpt');
+      h+=`<p class="q">${fx(g.gp)} · ${u('add')} <span class="rg">${fx(g.rg)}</span>. ${q}</p><div class="row"><button class="btn pri" data-a="yes">${fx(u('yes'))}</button><button class="btn alt" data-a="no">${fx(u('no'))}</button></div>`;
+    }
+  } else if(lab.st==='pick'){
+    if(g.split) h+=`<p class="q">${fx(u('splitQ'))}</p><div class="opts"><button class="opt" data-a="split:dis">${draw(X(P('W'),N))}<b>${u('dis')}</b></button><button class="opt" data-a="split:stay">${draw(X(P('W'),P('W')))}<b>${u('stay')}</b></button></div>`;
+    else h+=`<p class="q">${u('pick')}</p><div class="opts">${g.ions.map((ion,i)=>`<button class="opt" data-a="pick:${i}">${draw(ion.obs[0])}<span><b dir="ltr">${fx(ion.ion)}</b><br>${fx(ion.obs[1])}</span></button>`).join('')}</div>`;
+  } else if(lab.st==='found'){
+    if(lab.res) h+=`<p class="q okc">${u('found')}: ${fx(u(lab.res))}</p>`;
+    else{const ion=g.ions[lab.ion];
+      h+=`<p class="q okc">${u('found')}: <bdi dir="ltr">${fx(ion.ion)}</bdi> ${tr(ion.name)}</p>${ion.tests.length?`<p class="muted" style="margin:0">${u('confirm')}</p>`:''}<div class="result">${card(ion)}</div>`;}
+  } else if(lab.st==='none') h+=`<p class="q">${u('noneAcid')}</p>`;
+  if(lab.s) h+=`<div class="row">${hist.length?`<button class="btn ghost" data-a="back">${u('back')}</button>`:''}<button class="btn ghost" data-a="reset">${u('reset')}</button></div>`;
+  labBox.innerHTML=h;
+}
+labBox.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a, gs=lab.s&&gsOf(lab.s), g=gs&&gs[lab.gi];
+  if(a.startsWith('s:')) labGo({s:a.slice(2),gi:0,st:'ask',trail:[]});
+  else if(a==='yes') labGo({st:'pick',trail:[...lab.trail,{g:g.gp,p:1}]});
+  else if(a==='no'){const ni=lab.gi+1,t=[...lab.trail,{g:g.gp,p:0}];labGo(ni<gs.length?{gi:ni,st:'ask',trail:t}:{st:'none',trail:t})}
+  else if(a.startsWith('pick:')) labGo({st:'found',ion:+a.slice(5),res:null});
+  else if(a==='split:dis') labGo({st:'found',res:'disRes'});
+  else if(a==='split:stay') labGo({st:'found',res:'stayRes'});
+  else if(a==='back'){lab=JSON.parse(hist.pop());labRender()}
+  else if(a==='reset'){hist=[];lab=fresh();labRender()}
+});
+
+// quiz
+const quizBox=document.getElementById('quizBox'), scoreEl=document.getElementById('score');
+const pool=[], ionBy={};
+[['acid',ACID],['base',BASE]].forEach(([s,gs])=>gs.forEach(g=>(g.ions||[]).forEach(ion=>{ionBy[ion.ion]=ion;ion.tests.forEach(t=>pool.push({s,g,ion,t}))})));
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let quiz={i:null,opts:[],pick:null,score:0,n:0};
+function newQ(){
+  const i=Math.floor(Math.random()*pool.length), q=pool[i], same=t=>t[0]===q.t[0]&&t[1]===q.t[1];
+  const others=shuffle([...new Set(pool.filter(p=>p.s===q.s&&p.ion!==q.ion&&!p.ion.tests.some(same)).map(p=>p.ion.ion))]).slice(0,3);
+  Object.assign(quiz,{i,opts:shuffle([q.ion.ion,...others]),pick:null});quizRender();
+}
+function quizRender(){
+  const q=pool[quiz.i], ok=quiz.pick===q.ion.ion;
+  let h=`<div class="qv">${draw(q.t[2])}<div><p class="q">${u('quizQ')}</p><p style="margin:6px 0 0">${fx(q.t[0])} ${arrow()} <em>${fx(q.t[1])}</em></p></div></div>
+   <div class="opts">${quiz.opts.map(k=>{let c='opt';if(quiz.pick){if(k===q.ion.ion)c+=' right';else if(k===quiz.pick)c+=' wrong'}
+     return `<button class="${c}" data-k="${k}" ${quiz.pick?'disabled':''}><span><b class="big" dir="ltr">${fx(k)}</b><br><span class="muted">${tr(ionBy[k].name)}</span></span></button>`}).join('')}</div>`;
+  if(quiz.pick) h+=`<p class="q ${ok?'okc':'hitc'}">${ok?u('right'):u('wrong')+' <bdi dir="ltr">'+fx(q.ion.ion)+'</bdi>'} · ${tr(q.ion.name)}، ${fx(q.g.gp)}</p><div class="row"><button class="btn pri" data-a="next">${u('next')}</button></div>`;
+  quizBox.innerHTML=h; scoreEl.textContent=`${u('scoreL')}: ${quiz.score} / ${quiz.n}`;
+}
+quizBox.addEventListener('click',e=>{
+  const k=e.target.closest('[data-k]'), nx=e.target.closest('[data-a="next"]');
+  if(k&&!quiz.pick){quiz.pick=k.dataset.k;quiz.n++;if(quiz.pick===pool[quiz.i].ion.ion)quiz.score++;quizRender()}
+  else if(nx) newQ();
+});
+
+// search
+const qIn=document.getElementById('q'), emptyEl=document.getElementById('empty');
+qIn.dataset.phEn=qIn.placeholder;
+function applySearch(){
+  const v=qIn.value.trim().toLowerCase(); let any=false;
+  main.querySelectorAll('.group').forEach(gr=>{
+    const cards=gr.querySelectorAll(':scope>.grid>.card'); let vis=0;
+    if(cards.length) cards.forEach(c=>{const m=!v||c.textContent.toLowerCase().includes(v);c.hidden=!m;if(m)vis++});
+    else vis=!v||gr.textContent.toLowerCase().includes(v)?1:0;
+    gr.hidden=!vis; if(vis)any=true;
+  });
+  main.querySelectorAll('.ladder,.scheme>p').forEach(l=>l.hidden=!!v);
+  main.querySelectorAll('.scheme').forEach(sc=>sc.hidden=!!v&&!sc.querySelector('.group:not([hidden])'));
+  emptyEl.hidden=!v||any;
+}
+qIn.addEventListener('input',applySearch);
+
+// theme
+const root=document.documentElement, themeBtn=document.getElementById('theme');
+try{const t=localStorage.getItem('salt-theme');if(t)root.dataset.theme=t}catch(e){}
+themeBtn.addEventListener('click',()=>{
+  const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme=dark?'light':'dark';try{localStorage.setItem('salt-theme',root.dataset.theme)}catch(e){}
+});
+
+const baseRender=render;
+render=function(){
+  baseRender();
+  const radicals=[...ACID,...BASE].reduce((n,g)=>n+g.mem.length,0);
+  document.getElementById('stats').innerHTML=[[radicals,'statR'],[main.querySelectorAll('.tests li').length,'statT'],[chips.children.length,'statC']]
+    .map(([n,k])=>`<div><b>${n}</b><span>${u(k)}</span></div>`).join('');
+  labRender(); quiz.i===null?newQ():quizRender();
+  qIn.placeholder=AR?qIn.dataset.phAr:qIn.dataset.phEn; qIn.setAttribute('aria-label',u('search'));
+  themeBtn.setAttribute('aria-label',u('theme'));
+  applySearch();
+};
 try{AR=localStorage.getItem('salt-lang')==='ar'}catch(e){}
 render();
 </script>
