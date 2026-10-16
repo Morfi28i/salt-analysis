@@ -30,6 +30,12 @@
   --bg:#0f1612; --surface:#16201a; --ink:#e8eee5; --muted:#96a394; --line:#253128;
   --accent:#9fd6b0; --on:#0d1611; --amber:#e6b964; --hit:#f0937d; --ok:#7fc89a;
   --glass:#c9d3c6; --liq:#22382b; --salt:#9d968a; --edge:#c9d3c6; color-scheme:dark}
+:root[data-palette="ocean"]{--bg:#f0f7ff;--surface:#ffffff;--ink:#0b2545;--muted:#5a6b85;--line:#d6e4f5;--accent:#1565d8;--on:#ffffff;--amber:#e8590c;--hit:#d6336c;--ok:#2b8a3e;--glass:#3d5a80;--liq:#d8e8ff;--edge:#7c8aa3;color-scheme:light}
+:root[data-palette="violet"]{--bg:#0e0b1f;--surface:#1a1533;--ink:#f1edff;--muted:#a79fc9;--line:#2e2752;--accent:#a78bfa;--on:#160f2e;--amber:#fcd34d;--hit:#fb7185;--ok:#6ee7b7;--glass:#cfc6f5;--liq:#2a2350;--edge:#cfc6f5;color-scheme:dark}
+:root[data-palette="sunset"]{--bg:#fff7f0;--surface:#ffffff;--ink:#2b1a12;--muted:#7a6052;--line:#f2dccb;--accent:#e8590c;--on:#ffffff;--amber:#1971c2;--hit:#c2255c;--ok:#2f9e44;--glass:#6b4a3a;--liq:#fde8d7;--edge:#9a7a6a;color-scheme:light}
+:root[data-palette="mono"]{--bg:#0a0a0a;--surface:#161616;--ink:#fafafa;--muted:#a3a3a3;--line:#2a2a2a;--accent:#ff3b30;--on:#ffffff;--amber:#ffd60a;--hit:#ff6b6b;--ok:#34c759;--glass:#d4d4d4;--liq:#2a2a2a;--edge:#d4d4d4;color-scheme:dark}
+:root[data-palette="pink"]{--bg:#fff5f9;--surface:#ffffff;--ink:#2d1020;--muted:#85607a;--line:#f5d5e5;--accent:#d6336c;--on:#ffffff;--amber:#7048e8;--hit:#e03131;--ok:#2f9e44;--glass:#7a4a63;--liq:#fde2ee;--edge:#a07a90;color-scheme:light}
+:root[data-palette="navy"]{--bg:#0d1519;--surface:#152128;--ink:#e3edf1;--muted:#93a8b3;--line:#26363f;--accent:#4fb6d3;--on:#0d1519;--amber:#e3a043;--hit:#ff7a6b;--ok:#5fd08a;--glass:#a9bfca;--liq:#2a4552;--edge:#a9bfca;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -255,6 +261,16 @@ html.rv-on .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,
 html.rv-on .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html.rv-on .rv{opacity:1;transform:none;transition:none}}
 .progress{position:absolute;inset-inline-start:0;bottom:-1px;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--amber));border-radius:0 3px 3px 0;transition:width .1s linear}
+.tools{position:relative}
+.palpop{position:absolute;top:calc(100% + 10px);inset-inline-end:0;z-index:30;width:250px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 18px 40px -12px #0008;display:grid;gap:4px}
+.palpop h4{margin:2px 6px 6px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.palpop button{display:flex;align-items:center;gap:10px;font:inherit;font-size:14px;font-weight:700;color:var(--ink);background:transparent;border:1.5px solid transparent;border-radius:10px;padding:7px 8px;cursor:pointer;text-align:start}
+.palpop button:hover{background:var(--bg)}
+.palpop button[aria-checked="true"]{border-color:var(--accent)}
+.palpop button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.palpop .duo{display:flex;flex:none}
+.palpop .duo i{width:18px;height:18px;border-radius:50%;border:2px solid var(--surface);display:block}
+.palpop .duo i+i{margin-inline-start:-6px}
 .site-foot{border-top:1px solid var(--line);margin-top:64px;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px))}
 .site-foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:end;color:var(--muted);font-size:13.5px}
 .foot-main p{margin:8px 0 0;max-width:52ch}
@@ -398,7 +414,7 @@ html[dir="rtl"] .eyebrow,html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,htm
     <a href="#map" data-ar="الخريطة">Map</a><a href="#bench" data-ar="جرّب بنفسك">Experiments</a><a href="#lab" data-ar="التعرّف الموجّه">Guided</a><a href="#acid" data-ar="الشقوق الحامضية">Acidic</a><a href="#base" data-ar="الشقوق القاعدية">Basic</a><a href="#quiz" data-ar="اختبر نفسك">Quiz</a><a href="#dev" data-ar="المطور">Developer</a>
   </nav>
   <div class="tools">
-    <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark theme"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+    <button class="icon-btn" id="theme" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="palpop" aria-label="Choose colours"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1.3-1.1-1.6-1.1-2.7 0-.9.7-1.6 1.7-1.6H16a5 5 0 0 0 5-5C21 6.3 17 3 12 3z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="7.5" cy="11" r="1.4" fill="#e8302a"/><circle cx="10" cy="7" r="1.4" fill="#ffcf1a"/><circle cx="14.5" cy="7" r="1.4" fill="#22b34a"/><circle cx="17" cy="10.5" r="1.4" fill="#2f6bff"/></svg></button><div class="palpop" id="palpop" role="menu" hidden></div>
     <button class="lang" id="lang" type="button" lang="ar">عربي</button>
   </div>
 </div></header>
@@ -486,12 +502,12 @@ html[dir="rtl"] .eyebrow,html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,htm
 
 <script>
 const C={
- W:['#f6f6f1','white'],YW:['#efe6b8','yellowish white'],Y:['#f0c419','yellow'],PB:['#c9a06a','pale brown'],
- BR:['#7b4a1e','brown'],BF:['#d8b98b','buff'],RB:['#8e3b22','red-brown'],RBr:['#9a4a1f','reddish brown'],
- BB:['#3b2a20','brownish black'],O:['#ec7a1c','orange'],OR:['#e0592a','orange-red'],R:['#d0302b','red'],
- BL:['#8a0012','blood red'],G:['#3c9a4c','green'],DG:['#6f7b3b','dirty green'],LB:['#8fc6ee','pale blue'],
- B:['#2b67d1','blue'],V:['#7d3fa6','violet'],P:['#7a1c8c','purple'],K:['#1d1d1f','black'],GR:['#8b8d90','grey'],
- CL:[null,'colourless'],BRK:['#e0521f','brick red flame'],CR:['#d1143c','crimson flame'],AG:['#86c540','apple green flame']
+ W:['#f8f8f4','white'],YW:['#f3e9b0','yellowish white'],Y:['#ffcf1a','yellow'],PB:['#d4a46a','pale brown'],
+ BR:['#8a4f1d','brown'],BF:['#e2bf8a','buff'],RB:['#a2401f','red-brown'],RBr:['#b5531c','reddish brown'],
+ BB:['#3a2618','brownish black'],O:['#ff8c1a','orange'],OR:['#ff5a1f','orange-red'],R:['#e8302a','red'],
+ BL:['#a3001b','blood red'],G:['#22b34a','green'],DG:['#6e8a2e','dirty green'],LB:['#7fcfff','pale blue'],
+ B:['#2f6bff','blue'],V:['#8f3dff','violet'],P:['#9b1fd6','purple'],K:['#141414','black'],GR:['#9a9da3','grey'],
+ CL:[null,'colourless'],BRK:['#ff5a1f','brick red flame'],CR:['#e5143f','crimson flame'],AG:['#8fdc3c','apple green flame']
 };
 const P=c=>({t:'ppt',c}),S=c=>({t:'sol',c}),N={t:'none'},R=c=>({t:'ring',c}),F=c=>({t:'flame',c}),
  X=(a,b,la='',lb='')=>({t:'change',a,b,la,lb}),G=(gas,o={})=>({t:'tube',gas,solid:true,...o});
@@ -569,13 +585,13 @@ function tubeG(v,x=0){
   if(v.cloud) s+=`<g class="gasg" fill="#fff" opacity=".85" filter="url(#fSoft)"><circle cx="13" cy="15" r="6"/><circle cx="22" cy="10" r="8"/><circle cx="29" cy="17" r="6"/><circle cx="20" cy="19" r="6"/></g><text x="20" y="5" font-size="6" text-anchor="middle" fill="var(--muted)" font-family="sans-serif">NH₃</text>`;
   const liq=v.t==='sol'&&C[v.c][0]?C[v.c][0]:'var(--liq)';
   const top=v.t==='ring'?52:54;
-  s+=`<g class="liq"><path d="${bodyFrom(top)}" fill="${liq}" ${v.t==='sol'?'':'opacity=".9"'}/>`;
+  s+=`<g class="liq"><path d="${bodyFrom(top)}" fill="${v.t==='sol'&&C[v.c][0]?C[v.c][0]:'#cfe9ff'}" opacity="${v.t==='sol'?'.92':'.32'}"/>`;
   if(v.t==='ring') s+=`<path d="${bodyFrom(68)}" fill="#000" opacity=".12"/><g class="ringb"><rect x="13.2" y="63.5" width="13.6" height="7" fill="${C[v.c][0]}"/><rect x="13.2" y="63.5" width="13.6" height="7" fill="url(#gShade)"/></g>`;
   s+=`<path d="${bodyFrom(top)}" fill="url(#gShade)"/><ellipse cx="20" cy="${top}" rx="6.8" ry="1.3" fill="#fff" opacity=".28"/></g>`;
   if(v.solid) s+=`<g><path d="M13.2 80Q20 77 26.8 80V84A6.8 6.8 0 0 1 13.2 84Z" fill="var(--salt)"/><path d="M13.2 80Q20 77 26.8 80V84A6.8 6.8 0 0 1 13.2 84Z" fill="url(#gShade)"/><g fill="#fff" opacity=".35"><circle cx="16" cy="83" r=".6"/><circle cx="21" cy="81.5" r=".5"/><circle cx="24" cy="85" r=".6"/></g></g>`;
   if(v.t==='ppt'||v.ppt){
     const c=C[v.c||v.ppt][0];
-    s+=`<g class="ppt"><path d="M13.2 76Q16 73.5 20 75T26.8 75V84A6.8 6.8 0 0 1 13.2 84Z" fill="${c}"/><path d="M13.2 76Q16 73.5 20 75T26.8 75V84A6.8 6.8 0 0 1 13.2 84Z" fill="url(#gShade)"/><g fill="#000" opacity=".18"><circle cx="16" cy="80" r=".7"/><circle cx="22" cy="78" r=".6"/><circle cx="19" cy="83" r=".7"/><circle cx="24.5" cy="81.5" r=".5"/></g><g fill="#fff" opacity=".3"><circle cx="17.5" cy="77.5" r=".5"/><circle cx="23" cy="83" r=".5"/></g></g>
+    s+=`<g class="ppt"><path d="M13.2 72.5Q16 70 20 71.5T26.8 71.5V84A6.8 6.8 0 0 1 13.2 84Z" fill="${c}"/><path d="M13.2 72.5Q16 70 20 71.5T26.8 71.5V84A6.8 6.8 0 0 1 13.2 84Z" fill="url(#gShade)"/><g fill="#000" opacity=".18"><circle cx="16" cy="80" r=".7"/><circle cx="22" cy="78" r=".6"/><circle cx="19" cy="83" r=".7"/><circle cx="24.5" cy="81.5" r=".5"/></g><g fill="#fff" opacity=".3"><circle cx="17.5" cy="77.5" r=".5"/><circle cx="23" cy="83" r=".5"/></g></g>
        <g class="pp" fill="${c}"><circle cx="16.5" cy="71" r="1"/><circle cx="23" cy="68" r=".9"/><circle cx="19.5" cy="63" r=".8"/><circle cx="21.5" cy="72.5" r=".7"/></g>`;
   }
   if(v.fizz) s+=`<g fill="none" stroke="#fff" stroke-width=".8" opacity=".8"><circle class="bb" cx="16" cy="78" r="1.4"/><circle class="bb" cx="22" cy="80" r="1.1" style="animation-delay:.5s"/><circle class="bb" cx="19" cy="74" r="1.6" style="animation-delay:1s"/><circle class="bb" cx="24" cy="76" r="1" style="animation-delay:1.3s"/></g>`;
@@ -769,13 +785,13 @@ Object.assign(U.en,{onSoln:'added to the salt solution',oneOf:'You see one of th
  yes:'Yes, +ve',no:'No, −ve',pick:'Which of these matches what you see?',splitQ:'Add dil. HCl to the white precipitate. What happens?',dis:'The precipitate dissolves',stay:'The precipitate stays',
  disRes:'PO4{3-} phosphate or BO3{3-} borate',stayRes:'SO4{2-} sulphate',found:'Likely radical',confirm:'Run these confirmatory tests to be sure.',
  noneAcid:'No acidic radical detected in groups I–III.',endBase:'No precipitate with any group reagent. The cation is in group VI:',back:'Back',reset:'Start over',
- quizQ:'Which radical gives this result?',next:'Next question',right:'Correct',wrong:'Not quite. The answer is',scoreL:'Score',theme:'Switch light or dark theme',search:'Search tests'});
+ quizQ:'Which radical gives this result?',next:'Next question',right:'Correct',wrong:'Not quite. The answer is',scoreL:'Score',theme:'Choose colours',search:'Search tests'});
 Object.assign(U.ar,{onSoln:'تُضاف إلى محلول الملح',oneOf:'ترى أحد هذه النتائج',nothing:'لا يحدث تغيير',statR:'شقًا مشروحًا',statT:'كشفًا تأكيديًا',statC:'لونًا للنتائج',labStart:'عن أي نوع من الشقوق تبحث؟',
  acidBtn:'شق حامضي (أنيون)',baseBtn:'شق قاعدي (كاتيون)',add:'أضف',qGas:'هل يتصاعد غاز أو أبخرة؟',qPpt:'هل يتكون راسب؟',qBa:'هل يتكون راسب أبيض؟',
  yes:'نعم، +ve',no:'لا، −ve',pick:'أي من هذه الملاحظات تطابق ما تراه؟',splitQ:'أضف HCl المخفف إلى الراسب الأبيض. ماذا يحدث؟',dis:'يذوب الراسب',stay:'يبقى الراسب',
  disRes:'PO4{3-} فوسفات أو BO3{3-} بورات',stayRes:'SO4{2-} كبريتات',found:'الشق المتوقع',confirm:'أجرِ هذه الكشوف التأكيدية للتأكد.',
  noneAcid:'لم يُكتشف شق حامضي في المجموعات I–III.',endBase:'لا يتكون راسب مع أي كاشف مجموعة. الكاتيون من المجموعة السادسة:',back:'رجوع',reset:'ابدأ من جديد',
- quizQ:'أي شق يعطي هذه النتيجة؟',next:'السؤال التالي',right:'إجابة صحيحة',wrong:'إجابة غير صحيحة. الإجابة هي',scoreL:'النتيجة',theme:'التبديل بين الوضع الفاتح والداكن',search:'ابحث في الكشوف'});
+ quizQ:'أي شق يعطي هذه النتيجة؟',next:'السؤال التالي',right:'إجابة صحيحة',wrong:'إجابة غير صحيحة. الإجابة هي',scoreL:'النتيجة',theme:'اختر الألوان',search:'ابحث في الكشوف'});
 
 document.getElementById('rack').innerHTML=[P('Y'),G('BR'),S('BL'),R('BR'),P('LB'),F('AG'),P('K'),P('RBr')].map(draw).join('');
 
@@ -867,13 +883,28 @@ function applySearch(){
 }
 qIn.addEventListener('input',applySearch);
 
-// theme
-const root=document.documentElement, themeBtn=document.getElementById('theme');
-try{const t=localStorage.getItem('salt-theme');if(t)root.dataset.theme=t}catch(e){}
-themeBtn.addEventListener('click',()=>{
-  const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
-  root.dataset.theme=dark?'light':'dark';try{localStorage.setItem('salt-theme',root.dataset.theme)}catch(e){}
-});
+// colour themes: auto green follows the system; the rest are fixed looks
+const root=document.documentElement, themeBtn=document.getElementById('theme'), palPop=document.getElementById('palpop');
+const PALS=[['auto','#0f1612','#9fd6b0','أخضر (تلقائي)','Green (auto)'],['light','#f6f4ec','#1d4632','أخضر فاتح','Green light'],['dark','#0f1612','#9fd6b0','أخضر غامق','Green dark'],
+ ['ocean','#f0f7ff','#1565d8','أزرق محيطي','Ocean blue'],['violet','#0e0b1f','#a78bfa','بنفسجي ليلي','Night violet'],['sunset','#fff7f0','#e8590c','برتقالي غروب','Sunset orange'],
+ ['mono','#0a0a0a','#ff3b30','أسود وأحمر','Black & red'],['pink','#fff5f9','#d6336c','وردي','Pink'],['navy','#0d1519','#4fb6d3','كحلي ولبني','Navy & sky']];
+let pal='auto';
+function applyPal(k){
+  pal=k; delete root.dataset.theme; delete root.dataset.palette;
+  if(k==='light'||k==='dark') root.dataset.theme=k; else if(k!=='auto') root.dataset.palette=k;
+  try{localStorage.setItem('salt-pal',k)}catch(e){}
+  palRender(); requestAnimationFrame(()=>window.mmLines&&mmLines());
+}
+function palRender(){
+  palPop.innerHTML=`<h4>${AR?'اختر الألوان':'Choose colours'}</h4>`+PALS.map(([k,a,b,ar,en])=>`<button role="menuitemradio" aria-checked="${k===pal}" data-pal="${k}"><span class="duo"><i style="background:${a}"></i><i style="background:${b}"></i></span>${AR?ar:en}</button>`).join('');
+}
+try{const t=localStorage.getItem('salt-pal');if(t)pal=t}catch(e){}
+applyPal(pal);
+themeBtn.addEventListener('click',e=>{e.stopPropagation();palPop.hidden=!palPop.hidden;themeBtn.setAttribute('aria-expanded',!palPop.hidden)});
+palPop.addEventListener('click',e=>{const b=e.target.closest('[data-pal]');if(b){applyPal(b.dataset.pal)}});
+document.addEventListener('click',e=>{if(!palPop.hidden&&!e.target.closest('#palpop')){palPop.hidden=true;themeBtn.setAttribute('aria-expanded','false')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!palPop.hidden){palPop.hidden=true;themeBtn.setAttribute('aria-expanded','false');themeBtn.focus()}});
+
 
 
 /* ---------- experiment bench: the user runs the tests ---------- */
@@ -1110,7 +1141,7 @@ render=function(){
     .map(([n,k],i)=>`<div class="stat"><span class="stic" aria-hidden="true">${[draw(P('Y')),BOTTLE,'<svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="4" fill="#f0c419"/><circle cx="16" cy="9" r="4" fill="#3c9a4c"/><circle cx="12" cy="16" r="4" fill="#d0302b"/></svg>'][i]}</span><div><b>${n}</b><span>${u(k)}</span></div></div>`).join('');
   mmRender(); benchRender(); labRender(); quiz.i===null?newQ():quizRender();
   qIn.placeholder=AR?qIn.dataset.phAr:qIn.dataset.phEn; qIn.setAttribute('aria-label',u('search'));
-  themeBtn.setAttribute('aria-label',u('theme'));
+  themeBtn.setAttribute('aria-label',u('theme')); palRender();
   applySearch();
   document.querySelectorAll('.yr').forEach(e=>e.textContent=new Date().getFullYear());
   armTubes(); armReveal(); setProg();
