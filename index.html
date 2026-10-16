@@ -159,6 +159,35 @@ sub,sup{font-size:.7em;line-height:0}
 .ans.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--bg))}
 .ans.wrong{border-color:var(--hit);opacity:.55;text-decoration:line-through}
 .hintbox{background:color-mix(in srgb,var(--amber) 12%,var(--bg));border-radius:12px;padding:10px 14px;font-size:14.5px}
+.dots{display:flex;flex-wrap:wrap;gap:4px;margin-block:2px}
+.sw{width:14px;height:14px;border-radius:50%;border:1px solid var(--edge);flex:none;display:inline-block}
+.sw.cl{border-style:dashed;background:transparent}
+.grack{display:flex;flex-wrap:wrap;gap:8px;margin:-2px 0 16px}
+.gt{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 10px 8px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:70px;transition:border-color .15s,transform .15s}
+.gt:hover{border-color:var(--accent);transform:translateY(-2px)}
+.gt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gt svg{width:30px;height:auto}.gt svg.w2{width:60px}
+.gt b{font-size:13.5px}
+.card{scroll-margin-top:calc(var(--topH,61px) + 70px)}
+.tests .tx{display:flex;flex-direction:column;gap:4px}
+.tests svg{width:40px}.tests svg.w2{width:80px}
+.rgl{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.num,.then{font-weight:700;color:var(--muted);font-size:13px}
+.rchip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 7px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-weight:700;font-size:13.5px;max-width:100%}
+.rchip svg{width:11px!important;height:16px;color:var(--glass);flex:none}
+.res{display:flex;align-items:center;gap:7px}
+.res em{font-style:normal;font-weight:700;color:var(--hit)}
+.tnote{display:block;color:var(--muted);font-style:italic;font-size:12px}
+.pourrow{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.bigbottle{display:inline-flex;flex-direction:column;align-items:center;gap:6px;color:var(--glass)}
+.bigbottle svg{width:36px;height:50px}
+.bigbottle b{font-size:13px;color:var(--amber);max-width:200px;text-align:center}
+.parrow{width:34px;height:18px;color:var(--muted);align-self:center}
+html[dir="rtl"] .parrow{transform:scaleX(-1)}
+.bigtube svg{width:46px;height:auto}
+.yn .opt{flex-direction:column;align-items:flex-start;gap:6px}
+.mini{display:flex;gap:2px;align-items:flex-end;flex-wrap:wrap}
+.mini svg{width:28px;height:auto}.mini svg.w2{width:56px}
 .site-foot{border-top:1px solid var(--line);margin-top:64px;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px))}
 .site-foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:end;color:var(--muted);font-size:13.5px}
 .foot-main p{margin:8px 0 0;max-width:52ch}
@@ -562,29 +591,50 @@ const BASE=[
 ];
 
 /* ---------- render ---------- */
+const BOTTLE='<svg viewBox="0 0 20 28" aria-hidden="true"><path d="M7 2h6v6l4 5v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V13l4-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 16h12v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" fill="var(--accent)" opacity=".55"/></svg>';
+const FLAMEIC='<svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 3c5 7 7 11 5 17-1 4-9 4-10 0-2-6 1-10 5-17z" fill="#e0521f"/></svg>';
+// a coloured dot for whatever you would see: gas colour first, then the precipitate/solution colour
+function dotOf(v){
+  if(v.t==='change') return dotOf(v.b);
+  const k=v.gas&&v.gas!=='CL'?v.gas:(v.ppt||colourOf(v)||(v.gas?'CL':null));
+  const c=k&&C[k]?C[k][0]:null;
+  return `<i class="sw${c?'':' cl'}" ${c?`style="background:${c}"`:''} title="${k?(AR?CAR[k]:C[k][1]):''}"></i>`;
+}
+function palette(g){
+  if(g.ions) return g.ions.map(i=>dotOf(i.obs[0])).join('');
+  if(g.split) return dotOf(P('W'));
+  return '';
+}
+function testLine(rg,res,v){
+  const m=rg.match(/^([①②③])?\s*(?:(then)\s+)?(?:salt soln\.\s*\+\s*)?(.*)$/i)||[];
+  const num=m[1]||'', then=m[2], rest=m[3]||rg;
+  const ic=/flame/i.test(rest)?FLAMEIC:BOTTLE;
+  return `<div class="tx"><div class="rgl">${num?`<span class="num">${num}</span>`:''}${then?`<span class="then">${tr('then')}</span>`:''}<span class="rchip">${ic}<span>${fx(rest)}</span></span></div><div class="res">${dotOf(v)}<em>${fx(res)}</em></div></div>`;
+}
 function ladder(groups){
   return '<div class="ladder">'+groups.map((g,i)=>(i?`<div class="arrow"><svg viewBox="0 0 24 12"><path d="M1 6h20m-5-4 5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>${u('neg')}</div>`:'')+
-    `<a class="step" href="#${g.id}"><span class="gp">${fx(g.gp)}</span><span class="rg">${fx(g.rg)}</span><span class="mem" dir="ltr">${g.mem.map(fx).join(' · ')}</span></a>`).join('')+'</div>';
+    `<a class="step" href="#${g.id}"><span class="gp">${fx(g.gp)}</span><span class="rg">${fx(g.rg)}</span><span class="dots">${palette(g)}</span><span class="mem" dir="ltr">${g.mem.map(fx).join(' · ')}</span></a>`).join('')+'</div>';
 }
 const arrow=()=>AR?'←':'→';
-function card(ion){
+function card(ion,id){
   const [ov,ot,tags=[]]=ion.obs;
-  return `<article class="card"><div class="ion"><b dir="ltr">${fx(ion.ion)}</b><span>${tr(ion.name)}</span></div>
+  return `<article class="card"${typeof id==='string'?` id="${id}"`:''}><div class="ion"><b dir="ltr">${fx(ion.ion)}</b><span>${tr(ion.name)}</span></div>
    <div class="obs">${draw(ov)}<div><div class="lbl">${u('obs')}</div><p>${fx(ot)}</p>${tags.map(t=>`<span class="tag">${fx(t)}</span>`).join('')}</div></div>
-   ${ion.tests.length?`<div class="ct">${u('ct')}</div><ul class="tests">${ion.tests.map(([rg,res,v,n])=>
-     `<li data-c="${colourOf(v)||''}">${draw(v)}<div class="tx"><span class="rg">${fx(rg)}</span> ${arrow()} <em>${fx(res)}</em>${n?`<small>${tr(n)}</small>`:''}</div></li>`).join('')}</ul>`:''}
+   ${ion.tests.length?`<div class="ct">${u('ct')} <span class="muted">· ${u('onSoln')}</span></div><ul class="tests">${ion.tests.map(([rg,res,v,n])=>
+     `<li data-c="${colourOf(v)||''}">${draw(v)}${testLine(rg,res,v)}${n?`<small class="tnote">${tr(n)}</small>`:''}</li>`).join('')}</ul>`:''}
    ${ion.note?`<small style="color:var(--muted);font-style:italic">${fx(ion.note)}</small>`:''}</article>`;
 }
 function group(g){
   let h=`<div class="group" id="${g.id}"><div class="ghead"><h3>${fx(g.gp)}</h3><span class="rg">${fx(g.rg)}</span><span class="neg">${fx(g.neg)}</span>${g.note?`<span class="note">${tr(g.note)}</span>`:''}</div>
-   <div class="members">${g.mem.map(m=>`<span dir="ltr">${fx(m)}</span>`).join('')}</div>`;
+   ${g.ions?`<div class="grack">${g.ions.map((ion,i)=>`<a class="gt" href="#${g.id}-${i}">${draw(ion.obs[0])}<b dir="ltr">${fx(ion.ion)}</b></a>`).join('')}</div>`
+     :`<div class="members">${g.mem.map(m=>`<span dir="ltr">${fx(m)}</span>`).join('')}</div>`}`;
   if(g.split){
     const row=(ion,name,v,res)=>`<article class="card"><b dir="ltr" style="font-family:var(--f-display);font-size:24px">${fx(ion)}</b><span style="color:var(--muted)">${tr(name)}</span><ul class="tests"><li data-c="${colourOf(v)||''}" style="justify-content:center;border:0">${draw(v)}</li></ul><em style="font-style:normal;font-weight:700;color:var(--hit)">${tr(res)}</em></article>`;
     h+=`<div class="card" style="margin-bottom:12px"><div class="obs">${draw(P('W'))}<div><div class="lbl">${u('s1')}</div><p>${fx('Salt soln. + BaCl2 → white ppt of one of [PO4{3-}, BO3{3-}, SO4{2-}]')}</p></div></div><div class="ct">${u('s2')}</div></div>
      <div class="split">${row('PO4{3-}','Phosphate',X(P('W'),N,'BaCl2','+ HCl'),'ppt dissolves')}${row('BO3{3-}','Borate',X(P('W'),N,'BaCl2','+ HCl'),'ppt dissolves')}${row('SO4{2-}','Sulphate',X(P('W'),P('W'),'BaCl2','+ HCl'),'ppt stays (insoluble)')}</div>`;
   } else if(g.end){
     h+=`<div class="end">${g.mem.map(m=>`<span dir="ltr">${fx(m)}</span>`).join('')}</div>`;
-  } else h+=`<div class="grid">${g.ions.map(card).join('')}</div>`;
+  } else h+=`<div class="grid">${g.ions.map((ion,i)=>card(ion,g.id+'-'+i)).join('')}</div>`;
   return h+'</div>';
 }
 
@@ -618,13 +668,13 @@ chips.addEventListener('click',e=>{
 langBtn.addEventListener('click',()=>{AR=!AR;try{localStorage.setItem('salt-lang',AR?'ar':'en')}catch(e){}render()});
 
 /* ---------- site: stats, virtual lab, quiz, search, theme ---------- */
-Object.assign(U.en,{statR:'radicals covered',statT:'confirmatory tests',statC:'result colours',labStart:'Which kind of radical are you looking for?',
+Object.assign(U.en,{onSoln:'added to the salt solution',oneOf:'You see one of these',nothing:'Nothing changes',statR:'radicals covered',statT:'confirmatory tests',statC:'result colours',labStart:'Which kind of radical are you looking for?',
  acidBtn:'Acidic radical (anion)',baseBtn:'Basic radical (cation)',add:'Add',qGas:'Do you see gas or fumes?',qPpt:'Does a precipitate form?',qBa:'Does a white precipitate form?',
  yes:'Yes, +ve',no:'No, −ve',pick:'Which of these matches what you see?',splitQ:'Add dil. HCl to the white precipitate. What happens?',dis:'The precipitate dissolves',stay:'The precipitate stays',
  disRes:'PO4{3-} phosphate or BO3{3-} borate',stayRes:'SO4{2-} sulphate',found:'Likely radical',confirm:'Run these confirmatory tests to be sure.',
  noneAcid:'No acidic radical detected in groups I–III.',endBase:'No precipitate with any group reagent. The cation is in group VI:',back:'Back',reset:'Start over',
  quizQ:'Which radical gives this result?',next:'Next question',right:'Correct',wrong:'Not quite. The answer is',scoreL:'Score',theme:'Switch light or dark theme',search:'Search tests'});
-Object.assign(U.ar,{statR:'شقًا مشروحًا',statT:'كشفًا تأكيديًا',statC:'لونًا للنتائج',labStart:'عن أي نوع من الشقوق تبحث؟',
+Object.assign(U.ar,{onSoln:'تُضاف إلى محلول الملح',oneOf:'ترى أحد هذه النتائج',nothing:'لا يحدث تغيير',statR:'شقًا مشروحًا',statT:'كشفًا تأكيديًا',statC:'لونًا للنتائج',labStart:'عن أي نوع من الشقوق تبحث؟',
  acidBtn:'شق حامضي (أنيون)',baseBtn:'شق قاعدي (كاتيون)',add:'أضف',qGas:'هل يتصاعد غاز أو أبخرة؟',qPpt:'هل يتكون راسب؟',qBa:'هل يتكون راسب أبيض؟',
  yes:'نعم، +ve',no:'لا، −ve',pick:'أي من هذه الملاحظات تطابق ما تراه؟',splitQ:'أضف HCl المخفف إلى الراسب الأبيض. ماذا يحدث؟',dis:'يذوب الراسب',stay:'يبقى الراسب',
  disRes:'PO4{3-} فوسفات أو BO3{3-} بورات',stayRes:'SO4{2-} كبريتات',found:'الشق المتوقع',confirm:'أجرِ هذه الكشوف التأكيدية للتأكد.',
@@ -649,7 +699,11 @@ function labRender(){
     if(g.end) h+=`<p class="q">${u('endBase')}</p><div class="end">${g.mem.map(m=>`<span dir="ltr">${fx(m)}</span>`).join('')}</div>`;
     else{
       const q=lab.s==='acid'?(g.split?u('qBa'):u('qGas')):u('qPpt');
-      h+=`<p class="q">${fx(g.gp)} · ${u('add')} <span class="rg">${fx(g.rg)}</span>. ${q}</p><div class="row"><button class="btn pri" data-a="yes">${fx(u('yes'))}</button><button class="btn alt" data-a="no">${fx(u('no'))}</button></div>`;
+      const start=lab.s==='acid'&&!g.split?{t:'tube',solid:true}:N, pos=g.ions?g.ions.map(i=>i.obs[0]):[P('W')];
+      h+=`<div class="pourrow"><span class="bigbottle">${BOTTLE}<b>${fx(g.rg)}</b></span><svg class="parrow" viewBox="0 0 30 16" aria-hidden="true"><path d="M2 8h24m-6-5 6 5-6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bigtube">${draw(start)}</span></div>
+       <p class="q">${fx(g.gp)} · ${q}</p>
+       <div class="opts yn"><button class="opt" data-a="yes"><span class="mini">${pos.map(draw).join('')}</span><b>${fx(u('yes'))}</b><small class="muted">${u('oneOf')}</small></button>
+       <button class="opt" data-a="no"><span class="mini">${draw(start)}</span><b>${fx(u('no'))}</b><small class="muted">${u('nothing')}</small></button></div>`;
     }
   } else if(lab.st==='pick'){
     if(g.split) h+=`<p class="q">${fx(u('splitQ'))}</p><div class="opts"><button class="opt" data-a="split:dis">${draw(X(P('W'),N))}<b>${u('dis')}</b></button><button class="opt" data-a="split:stay">${draw(X(P('W'),P('W')))}<b>${u('stay')}</b></button></div>`;
