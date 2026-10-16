@@ -61,7 +61,7 @@ sub,sup{font-size:.7em;line-height:0}
   .links{order:3;flex:1 0 100%;margin-inline-start:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-inline:-6px}
   .links::-webkit-scrollbar{display:none}
   .links a{flex:none;padding:6px 10px;font-size:13.5px}
-  .links{max-height:44px;transition:max-height .25s ease,opacity .2s ease}
+  .links{max-height:44px;transition:max-height .2s ease,opacity .12s ease}
   .topbar.nav-up .links{max-height:0;opacity:0;pointer-events:none}
   .topbar.nav-up .wrap{row-gap:0}
 }
@@ -275,6 +275,10 @@ h1 span{color:var(--cyan)}
 .dhikr .salah{color:var(--cyan)}
 .eyebrow{color:var(--cyan)}
 .sec-ic{background:var(--surface);border:1px solid var(--line);color:var(--cyan)}
+.links a{color:var(--ink);opacity:.72;position:relative;transition:opacity .15s,color .15s}
+.links a:hover{opacity:1;background:var(--surface)}
+.links a.on{opacity:1;color:var(--cyan)}
+.links a.on::after{content:"";position:absolute;inset-inline:12px;bottom:1px;height:2px;border-radius:2px;background:var(--cyan)}
 .site-foot{border-top:1px solid var(--line);margin-top:64px;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px))}
 .site-foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:end;color:var(--muted);font-size:13.5px}
 .foot-main p{margin:8px 0 0;max-width:52ch}
@@ -1128,6 +1132,16 @@ const progEl=document.getElementById('progress');
 const setProg=()=>{const h=document.documentElement.scrollHeight-innerHeight;progEl.style.width=(h>0?Math.min(100,scrollY/h*100):0)+'%'};
 addEventListener('scroll',setProg,{passive:true}); addEventListener('resize',setProg);
 
+/* ---------- highlight the nav link for the section on screen ---------- */
+const navLinks=[...document.querySelectorAll('.links a')];
+const spy=()=>{
+  const y=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--topH'))||61)+80;
+  let cur=null;
+  navLinks.forEach(a=>{const t=document.querySelector(a.getAttribute('href'));if(t&&t.getBoundingClientRect().top<=y)cur=a});
+  navLinks.forEach(a=>a.classList.toggle('on',a===cur));
+};
+addEventListener('scroll',spy,{passive:true});
+
 const baseRender=render;
 render=function(){
   baseRender();
@@ -1139,7 +1153,7 @@ render=function(){
   syncTheme();
   applySearch();
   document.querySelectorAll('.yr').forEach(e=>e.textContent=new Date().getFullYear());
-  armTubes(); armReveal(); setProg();
+  armTubes(); armReveal(); setProg(); spy();
 };
 try{AR=localStorage.getItem('salt-lang')==='ar'}catch(e){}
 render();
