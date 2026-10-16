@@ -95,6 +95,53 @@ sub,sup{font-size:.7em;line-height:0}
 .search svg{position:absolute;inset-inline-start:15px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--muted)}
 .search input{width:100%;font:inherit;padding:12px 18px;padding-inline-start:44px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
 .empty{color:var(--muted);padding:24px 0}
+/* experiment bench */
+.bench-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.seg button{font:inherit;font-weight:700;font-size:14px;border:0;background:transparent;color:var(--muted);padding:7px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.seg button:focus-visible,.bottle:focus-visible,.ans:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.b-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:14px}
+.b-low{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;margin-top:14px}
+@media (max-width:860px){.b-grid,.b-low{grid-template-columns:minmax(0,1fr)}}
+.stage{align-items:center;text-align:center;justify-content:space-between}
+.stage .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.stage .sid{font-family:var(--f-display);font-weight:800;font-size:22px;margin-top:2px}
+.tube-big{position:relative;height:262px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.tube-big svg{width:100px;height:auto}.tube-big svg.w2{width:224px}
+.drop{position:absolute;top:0;left:50%;width:11px;height:15px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--accent);transform:translateX(-50%);opacity:0}
+.pour .drop{animation:drop .5s ease-in forwards}
+.pour svg{animation:appear .5s .35s both}
+@keyframes drop{0%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,95px)}}
+@keyframes appear{from{opacity:.15;transform:scale(.95)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pour .drop,.pour svg{animation:none}}
+.b-res{margin:0;font-size:17px;min-height:2.6em}
+.b-res em{font-style:normal;font-weight:700;color:var(--hit)}
+.warn{color:var(--amber);font-weight:700;font-size:15px}
+.panel h3{font-family:var(--f-display);font-size:19px;margin:0}
+.shelf-sec{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:-8px}
+.bottles{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}
+.bottle{display:flex;align-items:center;gap:9px;font:inherit;font-size:14px;font-weight:700;text-align:start;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;cursor:pointer;transition:border-color .15s,transform .15s}
+.bottle:hover{border-color:var(--accent);transform:translateY(-1px)}
+.bottle svg{flex:none;width:18px;height:26px;color:var(--glass)}
+.bottle small{display:block;font-weight:400;color:var(--muted);font-size:11.5px}
+.bottle.used{border-style:dashed}
+.bottle.used::after{content:"✓";margin-inline-start:auto;color:var(--ok);font-weight:700}
+.bottle.gr svg path:last-child{fill:var(--amber)}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;counter-reset:n}
+.log li{display:flex;gap:10px;align-items:center;padding:7px 0;border-top:1px dashed var(--line);font-size:14.5px}
+.log li:first-child{border-top:0}
+.log li::before{counter-increment:n;content:counter(n);font-weight:700;color:var(--muted);min-width:18px;font-variant-numeric:tabular-nums}
+.log svg{flex:none;width:28px;height:auto}.log svg.w2{width:56px}
+.log em{font-style:normal;font-weight:700;color:var(--hit)}
+.log .warn{font-size:13px}
+.answers{display:flex;flex-wrap:wrap;gap:8px}
+.ans{font:inherit;font-weight:700;font-size:16px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.ans:hover:not([disabled]){border-color:var(--accent)}
+.ans[disabled]{cursor:default}
+.ans.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--bg))}
+.ans.wrong{border-color:var(--hit);opacity:.55;text-decoration:line-through}
+.hintbox{background:color-mix(in srgb,var(--amber) 12%,var(--bg));border-radius:12px;padding:10px 14px;font-size:14.5px}
 .site-foot{border-top:1px solid var(--line);margin-top:64px;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px))}
 .site-foot .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
 .site-foot a{color:var(--accent);font-weight:700}
@@ -198,7 +245,7 @@ html[dir="rtl"] .eyebrow,html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,htm
 <header class="topbar"><div class="wrap">
   <a class="brand" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M12 4h8M13.5 4v8.5L6.3 25.2A3 3 0 0 0 8.9 29.6h14.2a3 3 0 0 0 2.6-4.4L18.5 12.5V4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M9.6 20.5h12.8l2 3.8a1.6 1.6 0 0 1-1.4 2.4H9a1.6 1.6 0 0 1-1.4-2.4z" fill="var(--accent)"/></svg><span data-ar="تحليل الأملاح">Salt Analysis</span></a>
   <nav class="links" aria-label="Sections">
-    <a href="#lab" data-ar="المعمل الافتراضي">Virtual lab</a><a href="#acid" data-ar="الشقوق الحامضية">Acidic</a><a href="#base" data-ar="الشقوق القاعدية">Basic</a><a href="#quiz" data-ar="اختبر نفسك">Quiz</a>
+    <a href="#bench" data-ar="جرّب بنفسك">Experiments</a><a href="#lab" data-ar="التعرّف الموجّه">Guided</a><a href="#acid" data-ar="الشقوق الحامضية">Acidic</a><a href="#base" data-ar="الشقوق القاعدية">Basic</a><a href="#quiz" data-ar="اختبر نفسك">Quiz</a>
   </nav>
   <div class="tools">
     <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark theme"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
@@ -213,14 +260,19 @@ html[dir="rtl"] .eyebrow,html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,htm
     <h1 data-ar="التحليل <span>الكيفي للأملاح</span>">Salt Analysis <span>Bench</span></h1>
     <div class="ar">الكشف عن الشقوق الحامضية والقاعدية</div>
     <p class="lede" data-ar="تعرّف على أي شق حامضي أو قاعدي خطوة بخطوة. كل كشف تأكيدي مرسوم كما يظهر في الأنبوبة أو اللهب داخل المعمل.">Identify any acidic or basic radical step by step. Every confirmatory test is drawn as the tube, fumes or flame you see on the bench.</p>
-    <div class="cta"><a class="btn pri" href="#lab" data-ar="ابدأ التعرّف على ملح">Identify a salt</a><a class="btn alt" href="#tests" data-ar="تصفّح الكشوف">Browse all tests</a></div>
+    <div class="cta"><a class="btn pri" href="#bench" data-ar="ابدأ التجارب">Run experiments</a><a class="btn alt" href="#tests" data-ar="تصفّح الكشوف">Browse all tests</a></div>
     <div class="stats" id="stats"></div>
   </div>
   <div class="rack" id="rack" aria-hidden="true"></div>
 </section>
 
+<section class="sec" id="bench">
+  <div class="sec-h"><div><h2 data-ar="جرّب بنفسك">Run the experiments</h2><p data-ar="تحصل على عينة مجهولة. اختر الكواشف من الرف، وشاهد ما يحدث في الأنبوبة، وسجّل النتائج، ثم حدّد الشق.">You get an unknown sample. Pick reagents from the shelf, watch what happens in the tube, record it, then name the radical.</p></div><div class="score" id="bScore"></div></div>
+  <div id="benchBox"></div>
+</section>
+
 <section class="sec" id="lab">
-  <div class="sec-h"><div><h2 data-ar="المعمل الافتراضي">Virtual lab</h2><p data-ar="أجب بحسب ما تراه في الأنبوبة، وسيقودك المعمل عبر كواشف المجموعات حتى الشق والكشوف التأكيدية المناسبة.">Answer with what you see in the tube. The lab walks you through the group reagents to the radical and its confirmatory tests.</p></div></div>
+  <div class="sec-h"><div><h2 data-ar="التعرّف الموجّه">Guided identification</h2><p data-ar="أجب بحسب ما تراه في الأنبوبة، وسيقودك المعمل عبر كواشف المجموعات حتى الشق والكشوف التأكيدية المناسبة.">Answer with what you see in the tube. The lab walks you through the group reagents to the radical and its confirmatory tests.</p></div></div>
   <div class="panel" id="labBox" aria-live="polite"></div>
 </section>
 
@@ -597,13 +649,158 @@ themeBtn.addEventListener('click',()=>{
   root.dataset.theme=dark?'light':'dark';try{localStorage.setItem('salt-theme',root.dataset.theme)}catch(e){}
 });
 
+
+/* ---------- experiment bench: the user runs the tests ---------- */
+Object.assign(NAME,{Carbonate:'كربونات',Bicarbonate:'بيكربونات',Sulphite:'كبريتيت',Thiosulphate:'ثيوكبريتات'});
+PHR.unshift(...[['No flame colour given in the notes','لا يوجد لون لهب مذكور في المذكرات'],['with yellowish white ppt of S','مع راسب كبريت أبيض مصفر'],['No visible change','لا يحدث تغيير ملحوظ']].map(([e,a])=>[new RegExp(esc(e),'gi'),a]));
+Object.assign(U.en,{acidS:'Acidic sample',baseS:'Basic sample',newS:'New sample',hint:'Hint',sample:'Unknown sample',sAcid:'contains one acidic radical',sBase:'contains one basic radical',
+ intro:'Add a reagent from the shelf. Each test uses a fresh portion of the sample.',shelf:'Reagent shelf',grpR:'Group reagents (use in order)',ctR:'Confirmatory reagents',onSolid:'on the solid',
+ nb:'Lab notebook',nbEmpty:'No experiments yet. Every result you see is recorded here.',ansQ:'Which radical is in the sample?',right:'Correct! Solved in',exps:'experiments',
+ wrongA:'Not this one. Look at your results again.',reveal:'Show answer',revealed:'The sample contained',solvedL:'Solved',
+ orderWarn:'Use the group reagents in order. This one is only added after the earlier groups test negative, and your sample reacts earlier in the scheme.',
+ hintNext:'Try the next group reagent in order:',hintCT:'Group {g} is positive. Now try its confirmatory reagents:',hintDone:'You have run the key tests. Compare your notebook with the test reference below.',
+ eqNote:'Phosphate and borate give the same results in these notes, so either answer counts.'});
+Object.assign(U.ar,{acidS:'عينة شق حامضي',baseS:'عينة شق قاعدي',newS:'عينة جديدة',hint:'تلميح',sample:'عينة مجهولة',sAcid:'تحتوي على شق حامضي واحد',sBase:'تحتوي على شق قاعدي واحد',
+ intro:'أضف كاشفًا من الرف. كل تجربة تُجرى على جزء جديد من العينة.',shelf:'رف الكواشف',grpR:'كواشف المجموعات (بالترتيب)',ctR:'الكواشف التأكيدية',onSolid:'على الملح الصلب',
+ nb:'كراسة المعمل',nbEmpty:'لم تُجرَ أي تجربة بعد. تُسجَّل هنا كل نتيجة تراها.',ansQ:'ما الشق الموجود في العينة؟',right:'إجابة صحيحة! حللتها في',exps:'تجارب',
+ wrongA:'ليس هذا الشق. راجع نتائج تجاربك.',reveal:'أظهر الإجابة',revealed:'كانت العينة تحتوي على',solvedL:'المحلولة',
+ orderWarn:'استخدم كواشف المجموعات بالترتيب. هذا الكاشف يُضاف فقط بعد أن تعطي المجموعات السابقة نتيجة سالبة، وعينتك تتفاعل في مرحلة أسبق.',
+ hintNext:'جرّب كاشف المجموعة التالي بالترتيب:',hintCT:'المجموعة {g} موجبة. جرّب الآن الكواشف التأكيدية الخاصة بها:',hintDone:'أجريت الكشوف الأساسية. قارن كراستك بدليل الكشوف بالأسفل.',
+ eqNote:'الفوسفات والبورات يعطيان النتائج نفسها في هذه المذكرات، لذا تُقبل أي منهما.'});
+
+const W_=P('W'), FADE=X(S('P'),S('CL'),'KMnO4','after');
+const fizz=G('CL',{fizz:true});
+const SIM={
+ acid:{order:['hcl','h2so4','bacl2'],
+  reag:{hcl:{l:'dil. HCl',solid:1,g:1},h2so4:{l:'conc. H2SO4',solid:1,g:2},bacl2:{l:'BaCl2',g:3},hclppt:{l:'dil. HCl on the BaCl2 ppt'},
+   cacl2:{l:'CaCl2'},agno3:{l:'AgNO3'},mgso4:{l:'MgSO4'},pbac:{l:'Pb(CH3COO)2'},feso4d:{l:'FeSO4 + dil. H2SO4'},feso4c:{l:'FeSO4 + conc. H2SO4'},
+   ki:{l:'KI + dil. H2SO4'},kmno4:{l:'KMnO4 + dil. H2SO4'},k2cr2o7:{l:'acidified K2Cr2O7'}},
+  ions:{
+   CO3:{f:'CO3{2-}',n:'Carbonate',g:1,r:{hcl:[fizz,'Strong effervescence, CO2↑'],bacl2:[W_,'White ppt'],cacl2:[W_,'White ppt'],agno3:[W_,'White ppt'],mgso4:[W_,'White ppt']}},
+   HCO3:{f:'HCO3{-}',n:'Bicarbonate',g:1,r:{hcl:[fizz,'Strong effervescence, CO2↑'],mgso4:[X(N,P('W'),'cold','heat'),'No ppt in cold, white ppt on heating']}},
+   NO2:{f:'NO2{-}',n:'Nitrite',g:1,r:{hcl:[G('BR'),'Brown fumes, NO2↑'],feso4d:[R('BR'),'Brown ring'],ki:[S('PB'),'Pale brown'],kmno4:[FADE,'Purple colour of permanganate disappears']}},
+   S:{f:'S{2-}',n:'Sulphide',g:1,r:{hcl:[G('CL'),'Colourless gas with bad smell, H2S↑'],pbac:[P('K'),'Black ppt (PbS)'],agno3:[P('K'),'Black ppt']}},
+   SO3:{f:'SO3{2-}',n:'Sulphite',g:1,r:{hcl:[G('CL'),'Colourless gas with pungent odour'],k2cr2o7:[X(S('O'),S('G'),'K2Cr2O7','after'),'Green'],kmno4:[FADE,'Colour disappears']}},
+   S2O3:{f:'S2O3{2-}',n:'Thiosulphate',g:1,r:{hcl:[G('CL',{ppt:'YW'}),'Colourless gas with pungent odour with yellowish white ppt of S'],k2cr2o7:[P('YW'),'Yellowish white ppt'],pbac:[X(P('W'),P('K'),'cold','boil'),'White ppt turns black on boiling']}},
+   Cl:{f:'Cl{-}',n:'Chloride',g:2,r:{h2so4:[G('CL',{cloud:true}),'Colourless gas HCl↑, white clouds with NH3 (→ NH4Cl)'],agno3:[W_,'White ppt (AgCl), soluble in ammonia']}},
+   Br:{f:'Br{-}',n:'Bromide',g:2,r:{h2so4:[{t:'sol',c:'O',gas:'RB',solid:true},'Reddish fumes; solution turns orange/red'],agno3:[P('YW'),'Yellowish white ppt (AgBr)']}},
+   I:{f:'I{-}',n:'Iodide',g:2,r:{h2so4:[G('V',{ppt:'K'}),'Violet fumes with black or brown ppt'],agno3:[P('Y'),'Yellow ppt (AgI)']}},
+   NO3:{f:'NO3{-}',n:'Nitrate',g:2,r:{h2so4:[G('PB'),'Pale brown fumes'],feso4c:[R('BR'),'Brown ring formed at the interface of the two layers']}},
+   PO4:{f:'PO4{3-}',n:'Phosphate',g:3,eq:'pb',r:{bacl2:[W_,'White ppt'],hclppt:[X(P('W'),N,'BaCl2','+ HCl'),'ppt dissolves']}},
+   BO3:{f:'BO3{3-}',n:'Borate',g:3,eq:'pb',r:{bacl2:[W_,'White ppt'],hclppt:[X(P('W'),N,'BaCl2','+ HCl'),'ppt dissolves']}},
+   SO4:{f:'SO4{2-}',n:'Sulphate',g:3,r:{bacl2:[W_,'White ppt'],hclppt:[X(P('W'),P('W'),'BaCl2','+ HCl'),'ppt stays (insoluble)']}}
+  }},
+ base:{order:['g1','g2','g3','g4','g5'],
+  reag:{g1:{l:'dil. HCl',g:1},g2:{l:'dil. HCl + H2S',g:2},g3:{l:'NH4Cl + NH4OH',g:3},g4:{l:'NH4OH + H2S',g:4},g5:{l:'NH4Cl + NH4OH + (NH4)2CO3',g:5},
+   naoh:{l:'NaOH'},nh4oh:{l:'NH4OH'},ki:{l:'KI'},k2cro4:{l:'K2CrO4'},na2co3:{l:'Na2CO3'},h2so4:{l:'conc. H2SO4'},h2o:{l:'H2O'},hgcl2:{l:'HgCl2'},
+   kmno4:{l:'acidified KMnO4'},kscn:{l:'KSCN'},pbo2:{l:'PbO2 + HNO3'},kno2:{l:'KNO2'},caso4:{l:'CaSO4'},flame:{l:'Flame test'}},
+  ions:{
+   Ag:{f:'Ag{+}',n:'Silver',g:1,r:{g1:[W_,'White ppt, AgCl'],k2cro4:[P('RB'),'Red brown ppt'],ki:[P('Y'),'Yellow ppt']}},
+   Pb:{f:'Pb{2+}',n:'Lead',g:1,r:{g1:[W_,'White ppt, PbCl2'],k2cro4:[P('Y'),'Yellow ppt'],h2so4:[W_,'White ppt']}},
+   Hg2:{f:'Hg2{2+}',n:'Mercurous',g:1,r:{g1:[W_,'White ppt, Hg2Cl2'],nh4oh:[P('K'),'Black ppt'],na2co3:[X(P('Y'),P('GR'),'first','later'),'Yellow turns to grey ppt']}},
+   Cu:{f:'Cu{2+}',n:'Copper / Cupric',g:2,r:{g2:[P('K'),'Black ppt, CuS'],nh4oh:[P('LB'),'Pale blue ppt'],ki:[W_,'White ppt']}},
+   Hg:{f:'Hg{2+}',n:'Mercuric',g:2,r:{g2:[X(P('W'),P('K'),'first','later'),'HgS: white ppt turns to black'],ki:[P('R'),'Red ppt'],na2co3:[P('RB'),'Red-brown ppt']}},
+   Bi:{f:'Bi{3+}',n:'Bismuth',g:2,r:{g2:[P('BB'),'Brownish black ppt, Bi2S3'],nh4oh:[W_,'White ppt'],h2o:[W_,'White ppt'],ki:[P('K'),'Black ppt']}},
+   Cd:{f:'Cd{2+}',n:'Cadmium',g:2,r:{g2:[P('Y'),'Yellow ppt (or orange-red), CdS'],nh4oh:[W_,'White ppt'],naoh:[W_,'White ppt']}},
+   Sn2:{f:'Sn{2+}',n:'Stannous',g:2,r:{g2:[P('BR'),'Brown ppt, SnS'],hgcl2:[X(P('W'),P('GR'),'first','more Sn²⁺'),'White ppt turns grey with more Sn{2+}']}},
+   Sn4:{f:'Sn{4+}',n:'Stannic',g:2,r:{g2:[P('Y'),'Yellow ppt, SnS2'],hgcl2:[N,'No ppt'],naoh:[W_,'White gelatinous ppt']}},
+   Sb:{f:'Sb{3+}',n:'Antimony',g:2,r:{g2:[P('O'),'Orange ppt, Sb2S3'],naoh:[W_,'White ppt'],h2o:[W_,'White ppt']}},
+   Al:{f:'Al{3+}',n:'Aluminium',g:3,r:{g3:[W_,'White gelatinous ppt, Al(OH)3'],naoh:[W_,'White gelatinous ppt'],na2co3:[W_,'White ppt']}},
+   Cr:{f:'Cr{3+}',n:'Chromium',g:3,r:{g3:[P('G'),'Green ppt, Cr(OH)3'],naoh:[P('G'),'Green ppt'],na2co3:[P('G'),'Green ppt']}},
+   Fe2:{f:'Fe{2+}',n:'Ferrous',g:3,r:{g3:[P('DG'),'Dirty green ppt, Fe(OH)2'],naoh:[P('DG'),'Dirty green ppt'],kmno4:[FADE,'Permanganate colour disappears']}},
+   Fe3:{f:'Fe{3+}',n:'Ferric',g:3,r:{g3:[P('RBr'),'Reddish brown ppt, Fe(OH)3'],naoh:[P('RBr'),'Reddish brown ppt'],kscn:[S('BL'),'Blood red colouration']}},
+   Zn:{f:'Zn{2+}',n:'Zinc',g:4,r:{g4:[W_,'White ppt'],naoh:[W_,'White ppt'],nh4oh:[W_,'White ppt']}},
+   Mn:{f:'Mn{2+}',n:'Manganese',g:4,r:{g4:[P('BF'),'Buff ppt'],naoh:[X(P('W'),P('BR'),'first','in air'),'White ppt turns brown in air'],pbo2:[S('V'),'Violet permanganate colour appears']}},
+   Co:{f:'Co{2+}',n:'Cobalt',g:4,r:{g4:[P('K'),'Black ppt'],naoh:[S('B'),'Blue colour'],kno2:[P('Y'),'Yellow ppt']}},
+   Ni:{f:'Ni{2+}',n:'Nickel',g:4,r:{g4:[P('K'),'Black ppt'],naoh:[P('G'),'Green']}},
+   Ca:{f:'Ca{2+}',n:'Calcium',g:5,r:{g5:[W_,'White ppt'],caso4:[N,'No ppt'],k2cro4:[P('Y'),'Yellow ppt, soluble in acetic acid'],flame:[F('BRK'),'Brick red']}},
+   Sr:{f:'Sr{2+}',n:'Strontium',g:5,r:{g5:[W_,'White ppt'],caso4:[W_,'White ppt'],k2cro4:[P('Y'),'Yellow ppt, soluble in acetic acid'],flame:[F('CR'),'Crimson red']}},
+   Ba:{f:'Ba{2+}',n:'Barium',g:5,r:{g5:[W_,'White ppt'],caso4:[W_,'White ppt'],k2cro4:[P('Y'),'Yellow ppt, insoluble in acetic acid'],flame:[F('AG'),'Apple green']}}
+  }}
+};
+// acidic group I anions also react with conc. H2SO4
+Object.values(SIM.acid.ions).forEach(i=>{if(i.g===1)i.r.h2so4=i.r.hcl});
+const ROM=['I','II','III','IV','V'];
+const benchBox=document.getElementById('benchBox'), bScore=document.getElementById('bScore');
+const bottleSvg='<svg viewBox="0 0 20 28" aria-hidden="true"><path d="M7 2h6v6l4 5v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V13l4-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 16h12v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" fill="var(--accent)" opacity=".55"/></svg>';
+let bench={s:'base',ion:null,log:[],anim:false,wrong:[],done:false,revealed:false,hint:false,score:0,seq:0};
+function newSample(s=bench.s){
+  const keys=Object.keys(SIM[s].ions); let k;
+  do{k=keys[Math.floor(Math.random()*keys.length)]}while(keys.length>1&&k===bench.ion);
+  Object.assign(bench,{s,ion:k,log:[],anim:false,wrong:[],done:false,revealed:false,hint:false,seq:bench.seq+1});
+}
+function result(s,k,rid){
+  const ion=SIM[s].ions[k], rg=SIM[s].reag[rid];
+  if(s==='base'&&rg.g&&rg.g>ion.g) return {vis:N,warn:true};
+  const r=ion.r[rid];
+  if(r) return {vis:r[0],txt:r[1]};
+  if(rid==='flame') return {vis:N,txt:'No flame colour given in the notes',none:true};
+  return {vis:N,txt:'No visible change',none:true};
+}
+function hintText(){
+  const S=SIM[bench.s], ion=S.ions[bench.ion], used=r=>bench.log.includes(r);
+  const gr=S.order[ion.g-1];
+  if(used(gr)){
+    const ct=[...new Set(Object.values(S.ions).filter(i=>i.g===ion.g).flatMap(i=>Object.keys(i.r)))].filter(r=>!S.reag[r].g&&!used(r));
+    if(ct.length) return u('hintCT').replace('{g}',ROM[ion.g-1])+' '+ct.map(r=>`<b>${fx(S.reag[r].l)}</b>`).join('، ');
+    return u('hintDone');
+  }
+  const nx=S.order.find(r=>!used(r));
+  return nx?u('hintNext')+` <b>${fx(S.reag[nx].l)}</b>`:u('hintDone');
+}
+function benchRender(){
+  if(!bench.ion) newSample();
+  const S=SIM[bench.s], ion=S.ions[bench.ion], last=bench.log[bench.log.length-1];
+  const lr=last&&result(bench.s,bench.ion,last);
+  const base=bench.s==='acid'?{t:'tube',solid:true}:N;
+  const bottle=(rid)=>{const r=S.reag[rid];return `<button class="bottle${r.g?' gr':''}${bench.log.includes(rid)?' used':''}" data-r="${rid}">${bottleSvg}<span>${fx(r.l)}${r.solid?`<small>${u('onSolid')}</small>`:''}${r.g?`<small>${fx('gp '+ROM[r.g-1])}</small>`:''}</span></button>`};
+  const ct=Object.keys(S.reag).filter(r=>!S.reag[r].g);
+  const lineOf=(rid)=>{const r=result(bench.s,bench.ion,rid);return `${fx(S.reag[rid].l)} ${arrow()} ${r.warn?`<span class="warn">${u('orderWarn')}</span>`:r.none?`<span class="muted">${fx(r.txt)}</span>`:`<em>${fx(r.txt)}</em>`}`};
+  let h=`<div class="bench-top"><div class="seg" role="group"><button data-b="s:base" aria-pressed="${bench.s==='base'}">${u('baseS')}</button><button data-b="s:acid" aria-pressed="${bench.s==='acid'}">${u('acidS')}</button></div>
+   <button class="btn alt" data-b="new">${u('newS')}</button><button class="btn ghost" data-b="hint">${u('hint')}</button></div>
+  <div class="b-grid">
+   <div class="panel stage"><div><div class="lbl">${u('sample')} #${bench.seq}</div><div class="sid">${bench.s==='acid'?u('sAcid'):u('sBase')}</div></div>
+    <div class="tube-big${bench.anim?' pour':''}"><span class="drop"></span>${draw(lr?lr.vis:base)}</div>
+    <p class="b-res">${last?lineOf(last):`<span class="muted">${u('intro')}</span>`}</p>
+    ${bench.hint?`<div class="hintbox">${hintText()}</div>`:''}</div>
+   <div class="panel"><h3>${u('shelf')}</h3><div class="shelf-sec">${u('grpR')}</div><div class="bottles">${S.order.map(bottle).join('')}</div>
+    <div class="shelf-sec">${u('ctR')}</div><div class="bottles">${ct.map(bottle).join('')}</div></div>
+  </div>
+  <div class="b-low">
+   <div class="panel"><h3>${u('nb')}</h3>${bench.log.length?`<ol class="log">${bench.log.map(rid=>{const r=result(bench.s,bench.ion,rid);return `<li>${draw(r.vis)}<span>${lineOf(rid)}</span></li>`}).join('')}</ol>`:`<p class="muted" style="margin:0">${u('nbEmpty')}</p>`}</div>
+   <div class="panel"><h3>${u('ansQ')}</h3><div class="answers">${Object.entries(S.ions).map(([k,i])=>{
+      const ok=bench.done&&(k===bench.ion||(i.eq&&i.eq===ion.eq&&bench.pick===k)), bad=bench.wrong.includes(k);
+      return `<button class="ans${ok?' right':''}${bad?' wrong':''}" data-a="${k}" title="${tr(i.n)}" ${bench.done||bad?'disabled':''}><span dir="ltr">${fx(i.f)}</span></button>`}).join('')}</div>
+    ${bench.done?`<p class="q okc">${bench.revealed?u('revealed'):u('right')+' '+bench.log.length+' '+u('exps')}${bench.revealed?` <bdi dir="ltr">${fx(ion.f)}</bdi> ${tr(ion.n)}`:''}</p>${ion.eq?`<p class="muted" style="margin:0">${u('eqNote')}</p>`:''}<div class="row"><button class="btn pri" data-b="new">${u('newS')}</button></div>`
+      :`${bench.wrong.length?`<p class="hitc" style="margin:0;font-weight:700">${u('wrongA')}</p>`:''}<div class="row"><button class="btn ghost" data-b="reveal">${u('reveal')}</button></div>`}
+   </div>
+  </div>`;
+  benchBox.innerHTML=h; bench.anim=false;
+  bScore.textContent=`${u('solvedL')}: ${bench.score}`;
+}
+benchBox.addEventListener('click',e=>{
+  const r=e.target.closest('[data-r]'), b=e.target.closest('[data-b]'), a=e.target.closest('[data-a]');
+  if(r){bench.log.push(r.dataset.r);bench.anim=true;benchRender();benchBox.querySelector('.stage').scrollIntoView({block:'nearest',behavior:'smooth'});return}
+  if(a&&!bench.done){
+    const k=a.dataset.a, S=SIM[bench.s], ion=S.ions[bench.ion];
+    if(k===bench.ion||(ion.eq&&S.ions[k].eq===ion.eq)){bench.done=true;bench.pick=k;bench.score++}
+    else bench.wrong.push(k);
+    benchRender();return;
+  }
+  if(!b)return; const v=b.dataset.b;
+  if(v.startsWith('s:')){newSample(v.slice(2));benchRender()}
+  else if(v==='new'){newSample();benchRender();document.getElementById('bench').scrollIntoView({behavior:'smooth'})}
+  else if(v==='hint'){bench.hint=!bench.hint;benchRender()}
+  else if(v==='reveal'){bench.done=true;bench.revealed=true;bench.pick=bench.ion;benchRender()}
+});
+
 const baseRender=render;
 render=function(){
   baseRender();
   const radicals=[...ACID,...BASE].reduce((n,g)=>n+g.mem.length,0);
   document.getElementById('stats').innerHTML=[[radicals,'statR'],[main.querySelectorAll('.tests li').length,'statT'],[chips.children.length,'statC']]
     .map(([n,k])=>`<div><b>${n}</b><span>${u(k)}</span></div>`).join('');
-  labRender(); quiz.i===null?newQ():quizRender();
+  benchRender(); labRender(); quiz.i===null?newQ():quizRender();
   qIn.placeholder=AR?qIn.dataset.phAr:qIn.dataset.phEn; qIn.setAttribute('aria-label',u('search'));
   themeBtn.setAttribute('aria-label',u('theme'));
   applySearch();

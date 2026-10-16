@@ -6,7 +6,8 @@ An interactive reference for qualitative salt analysis. It covers the acidic and
 
 ## Features
 
-- **Virtual lab:** answer what you see at each group reagent and get walked to the radical and its confirmatory tests
+- **Run the experiments:** get an unknown sample, add reagents from a shelf, watch the tube react, keep a lab notebook and name the radical (with hints)
+- **Guided identification:** answer what you see at each group reagent and get walked to the radical and its confirmatory tests
 - **Test yourself:** a quiz that shows a result and asks which radical gives it, with a running score
 - **Search:** filter tests by radical, reagent or result
 - **Acidic radicals:** groups I–III, with the gas evolved and the confirmatory tests for each radical
@@ -27,4 +28,4 @@ Transcribed from handwritten study notes. Items marked in italics were unclear i
 
 ---
 
-مرجع تفاعلي للتحليل الكيفي للأملاح، يضم معملًا افتراضيًا واختبارًا ذاتيًا، و يغطي الشقوق الحامضية والقاعدية. كل كشف تأكيدي مرسوم كما يظهر في أنبوبة الاختبار، والصفحة متاحة بالعربية والإنجليزية.
+مرجع تفاعلي للتحليل الكيفي للأملاح، يتيح لك إجراء التجارب بنفسك على عينات مجهولة، ويضم تعرّفًا موجّهًا واختبارًا ذاتيًا، و يغطي الشقوق الحامضية والقاعدية. كل كشف تأكيدي مرسوم كما يظهر في أنبوبة الاختبار، والصفحة متاحة بالعربية والإنجليزية.
