@@ -22,6 +22,13 @@ An interactive reference for qualitative salt analysis. It covers the acidic and
 
 Open `index.html` in any browser, or visit the live page. No build step or dependencies.
 
+## Developer
+
+Designed and developed by **Morfi** (Essam), brand Morphine.
+[Portfolio](https://morfi28i.github.io/portfolio/) · [Instagram](https://instagram.com/Morfi.28i)
+
+© 2026 Morfi. All rights reserved.
+
 ## Source
 
 Transcribed from handwritten study notes. Items marked in italics were unclear in the original.
