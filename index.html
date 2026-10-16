@@ -60,7 +60,11 @@ sub,sup{font-size:.7em;line-height:0}
   .links{order:3;flex:1 0 100%;margin-inline-start:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-inline:-6px}
   .links::-webkit-scrollbar{display:none}
   .links a{flex:none;padding:6px 10px;font-size:13.5px}
+  .links{max-height:44px;transition:max-height .25s ease,opacity .2s ease}
+  .topbar.nav-up .links{max-height:0;opacity:0;pointer-events:none}
+  .topbar.nav-up .wrap{row-gap:0}
 }
+@media (max-width:860px) and (prefers-reduced-motion:reduce){.links{transition:none}}
 .hero{padding-block:56px 32px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center}
 @media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr);padding-block:32px 16px;gap:24px}}
 .eyebrow{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:10px}
@@ -882,6 +886,12 @@ setInterval(()=>{
 // keep sticky offsets in step with the header height (the dhikr bar can wrap)
 const topbar=document.getElementById('topbar');
 const setTopH=()=>document.documentElement.style.setProperty('--topH',topbar.offsetHeight+'px');
+// hide the nav row while scrolling down, bring it back on the way up
+let lastY=scrollY;
+addEventListener('scroll',()=>{
+  const y=scrollY; if(Math.abs(y-lastY)<8) return;
+  topbar.classList.toggle('nav-up',y>lastY&&y>120); lastY=y;
+},{passive:true});
 setTopH(); if(window.ResizeObserver) new ResizeObserver(setTopH).observe(topbar); else addEventListener('resize',setTopH);
 
 const baseRender=render;
