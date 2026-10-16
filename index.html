@@ -188,6 +188,25 @@ html[dir="rtl"] .parrow{transform:scaleX(-1)}
 .yn .opt{flex-direction:column;align-items:flex-start;gap:6px}
 .mini{display:flex;gap:2px;align-items:flex-end;flex-wrap:wrap}
 .mini svg{width:28px;height:auto}.mini svg.w2{width:56px}
+.eq{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.eq .s svg{width:22px!important;height:auto}
+.eq .r svg{width:42px!important;height:auto}.eq .r svg.w2{width:84px!important}
+.eq .op{color:var(--muted);font-weight:700;font-size:16px}
+.obs .eq .s svg{width:26px!important}.obs .eq .r svg{width:52px!important}.obs .eq .r svg.w2{width:104px!important}
+.obs{flex-wrap:wrap}
+.qv .eq .s svg{width:30px!important}.qv .eq .r svg{width:64px!important}.qv .eq .r svg.w2{width:128px!important}
+.qv .rchip{font-size:15px}
+.qv{background:var(--bg);border-radius:14px;padding:14px}
+.opt>svg{flex:none;width:34px!important}.opt>svg.w2{width:68px!important}
+.sec-ic{width:50px;height:50px;border-radius:14px;background:color-mix(in srgb,var(--accent) 15%,var(--surface));color:var(--accent);display:grid;place-items:center;margin-bottom:12px}
+.sec-ic svg{width:26px;height:26px}
+.stat{display:flex;align-items:center;gap:12px}
+.stic{width:46px;height:46px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;color:var(--glass);flex:none}
+.stic svg{width:24px;height:30px}
+.dev-facts>div{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:center}
+.dev-facts svg{grid-row:span 2;width:22px;height:22px;color:var(--accent)}
+.skills span{display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 4px}
+.tile{width:24px;height:24px;border-radius:6px;background:var(--b);color:var(--t);font-style:normal;font-weight:800;font-size:11.5px;display:grid;place-items:center;font-family:var(--f-display)}
 .site-foot{border-top:1px solid var(--line);margin-top:64px;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px))}
 .site-foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:end;color:var(--muted);font-size:13.5px}
 .foot-main p{margin:8px 0 0;max-width:52ch}
@@ -342,17 +361,17 @@ html[dir="rtl"] .eyebrow,html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,htm
 </section>
 
 <section class="sec" id="bench">
-  <div class="sec-h"><div><h2 data-ar="جرّب بنفسك">Run the experiments</h2><p data-ar="تحصل على عينة مجهولة. اختر الكواشف من الرف، وشاهد ما يحدث في الأنبوبة، وسجّل النتائج، ثم حدّد الشق.">You get an unknown sample. Pick reagents from the shelf, watch what happens in the tube, record it, then name the radical.</p></div><div class="score" id="bScore"></div></div>
+  <div class="sec-h"><div><div class="sec-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 0 0 6.2 21.5h11.6a2 2 0 0 0 1.7-3L14 9V3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 15h10l1.6 3a1 1 0 0 1-.9 1.5H6.3a1 1 0 0 1-.9-1.5z" fill="currentColor" opacity=".45"/><circle cx="17.5" cy="5" r="1.6" fill="currentColor"/></svg></div><h2 data-ar="جرّب بنفسك">Run the experiments</h2><p data-ar="تحصل على عينة مجهولة. اختر الكواشف من الرف، وشاهد ما يحدث في الأنبوبة، وسجّل النتائج، ثم حدّد الشق.">You get an unknown sample. Pick reagents from the shelf, watch what happens in the tube, record it, then name the radical.</p></div><div class="score" id="bScore"></div></div>
   <div id="benchBox"></div>
 </section>
 
 <section class="sec" id="lab">
-  <div class="sec-h"><div><h2 data-ar="التعرّف الموجّه">Guided identification</h2><p data-ar="أجب بحسب ما تراه في الأنبوبة، وسيقودك المعمل عبر كواشف المجموعات حتى الشق والكشوف التأكيدية المناسبة.">Answer with what you see in the tube. The lab walks you through the group reagents to the radical and its confirmatory tests.</p></div></div>
+  <div class="sec-h"><div><div class="sec-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="5" cy="5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="19" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 5h7a3.5 3.5 0 0 1 0 7H10a3.5 3.5 0 0 0 0 7h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="2.5 2.5"/></svg></div><h2 data-ar="التعرّف الموجّه">Guided identification</h2><p data-ar="أجب بحسب ما تراه في الأنبوبة، وسيقودك المعمل عبر كواشف المجموعات حتى الشق والكشوف التأكيدية المناسبة.">Answer with what you see in the tube. The lab walks you through the group reagents to the radical and its confirmatory tests.</p></div></div>
   <div class="panel" id="labBox" aria-live="polite"></div>
 </section>
 
 <section class="sec" id="tests">
-  <div class="sec-h"><div><h2 data-ar="دليل الكشوف">Test reference</h2><p data-ar="ابحث باسم الشق أو الكاشف أو النتيجة، أو اختر لونًا لعرض كل الكشوف التي تعطيه.">Search by radical, reagent or result, or pick a colour to highlight every test that gives it.</p></div></div>
+  <div class="sec-h"><div><div class="sec-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><h2 data-ar="دليل الكشوف">Test reference</h2><p data-ar="ابحث باسم الشق أو الكاشف أو النتيجة، أو اختر لونًا لعرض كل الكشوف التي تعطيه.">Search by radical, reagent or result, or pick a colour to highlight every test that gives it.</p></div></div>
   <div class="toolbar"><label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="q" type="search" autocomplete="off" aria-label="Search tests" placeholder="Search: Fe3+, KI, brown ring…" data-ph-ar="ابحث: Fe3+، KI، حلقة بنية…"></label></div>
   <div class="key" data-ar="<span><b>C.T.</b> كشف تأكيدي</span><span><b>ppt</b> راسب</span><span><b>gp</b> مجموعة</span><span><b dir='ltr'>+ve / −ve</b> تفاعل موجب / سالب</span>"><span><b>C.T.</b> confirmatory test</span><span><b>ppt</b> precipitate</span><span><b>gp</b> group</span><span><b>+ve / −ve</b> reaction seen / not seen</span></div>
   <div class="index"><h3 data-ar="ابحث باللون">Find by colour</h3><div class="chips" id="chips"></div></div>
@@ -364,18 +383,18 @@ html[dir="rtl"] .eyebrow,html[dir="rtl"] .index h3,html[dir="rtl"] .obs .lbl,htm
 </div>
 
 <section class="sec" id="quiz">
-  <div class="sec-h"><div><h2 data-ar="اختبر نفسك">Test yourself</h2><p data-ar="انظر إلى النتيجة واختر الشق الذي يعطيها.">Look at the result and pick the radical that gives it.</p></div><div class="score" id="score"></div></div>
+  <div class="sec-h"><div><div class="sec-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-6l-4 4v-4H6a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 8.2a2 2 0 1 1 2.6 1.9c-.6.2-.6.6-.6 1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="13.6" r="1" fill="currentColor"/></svg></div><h2 data-ar="اختبر نفسك">Test yourself</h2><p data-ar="انظر إلى النتيجة واختر الشق الذي يعطيها.">Look at the result and pick the radical that gives it.</p></div><div class="score" id="score"></div></div>
   <div class="panel" id="quizBox" aria-live="polite"></div>
 </section>
 
 <section class="sec" id="dev">
-  <div class="sec-h"><div><h2 data-ar="تعرّف على المطور">Meet the developer</h2><p data-ar="الشخص اللي ورا الموقع ده، وطرق التواصل.">The person behind this site, and how to reach him.</p></div></div>
+  <div class="sec-h"><div><div class="sec-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><h2 data-ar="تعرّف على المطور">Meet the developer</h2><p data-ar="الشخص اللي ورا الموقع ده، وطرق التواصل.">The person behind this site, and how to reach him.</p></div></div>
   <div class="dev">
     <div class="dev-card">
       <div class="dev-id"><div class="avatar" aria-hidden="true">M</div><div><div class="dev-role" data-ar="موشن ديزاينر ومونتير فريلانسر">Freelance motion designer &amp; video editor</div><div class="dev-name" data-ar="عصام · Morfi">Essam · Morfi</div></div></div>
       <p data-ar="أنا عصام، أعمل باسم Morfi وبراند Morphine. موشن ديزاينر ومونتير فريلانسر من مصر، بخبرة تقارب سنتين في الموشن جرافيك التجاري والإعلانات وشغل العملاء.">I'm Essam, working as Morfi under the Morphine brand. A freelance motion designer and video editor from Egypt, with about two years of commercial motion graphics, ads and client work.</p>
-      <dl class="dev-facts"><div><dt data-ar="البراند">Brand</dt><dd>Morphine</dd></div><div><dt data-ar="الموقع">Location</dt><dd data-ar="مصر">Egypt</dd></div><div><dt data-ar="الخبرة">Experience</dt><dd data-ar="حوالي سنتين">About two years</dd></div></dl>
-      <div class="skills"><span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span><span>Canva</span></div>
+      <dl class="dev-facts"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7.5" cy="8.5" r="1.5" fill="currentColor"/></svg><dt data-ar="البراند">Brand</dt><dd>Morphine</dd></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9.5" r="2.5" fill="currentColor"/></svg><dt data-ar="الموقع">Location</dt><dd data-ar="مصر">Egypt</dd></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><dt data-ar="الخبرة">Experience</dt><dd data-ar="حوالي سنتين">About two years</dd></div></dl>
+      <div class="skills"><span><i class="tile" style="--t:#cf96fd;--b:#1f0040">Ae</i>After Effects</span><span><i class="tile" style="--t:#9999ff;--b:#00005b">Pr</i>Premiere Pro</span><span><i class="tile" style="--t:#31a8ff;--b:#001e36">Ps</i>Photoshop</span><span><i class="tile" style="--t:#ffffff;--b:#00a8c8">Ca</i>Canva</span></div>
       <div class="dev-links">
         <a href="https://morfi28i.github.io/portfolio/"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span data-ar="البورتفوليو">Portfolio</span></a>
         <a href="https://instagram.com/Morfi.28i"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg><span data-ar="إنستجرام">Instagram</span></a>
@@ -605,23 +624,31 @@ function palette(g){
   if(g.split) return dotOf(P('W'));
   return '';
 }
+// split "① Salt soln. + KI" into its number, a "then", and the reagent itself
+function parseRg(rg){
+  const m=rg.match(/^([①②③])?\s*(?:(then)\s+)?(?:(?:salt soln\.|unknown solid)\s*\+\s*)?(.*)$/i)||[];
+  return {num:m[1]||'',then:m[2],rest:m[3]||rg};
+}
+const rchip=rest=>`<span class="rchip">${/flame/i.test(rest)?FLAMEIC:BOTTLE}<span>${fx(rest)}</span></span>`;
+// sample + reagent → what you see, drawn
+function eqHTML(start,rest,v,num='',then=''){
+  return `<div class="eq">${num?`<span class="num">${num}</span>`:''}${then?`<span class="then">${tr('then')}</span>`:''}<span class="s">${draw(start)}</span><span class="op">+</span>${rchip(rest)}<span class="op">${arrow()}</span><span class="r">${draw(v)}</span></div>`;
+}
 function testLine(rg,res,v){
-  const m=rg.match(/^([①②③])?\s*(?:(then)\s+)?(?:salt soln\.\s*\+\s*)?(.*)$/i)||[];
-  const num=m[1]||'', then=m[2], rest=m[3]||rg;
-  const ic=/flame/i.test(rest)?FLAMEIC:BOTTLE;
-  return `<div class="tx"><div class="rgl">${num?`<span class="num">${num}</span>`:''}${then?`<span class="then">${tr('then')}</span>`:''}<span class="rchip">${ic}<span>${fx(rest)}</span></span></div><div class="res">${dotOf(v)}<em>${fx(res)}</em></div></div>`;
+  const {num,then,rest}=parseRg(rg);
+  return `<div class="tx">${eqHTML(N,rest,v,num,then)}<div class="res">${dotOf(v)}<em>${fx(res)}</em></div></div>`;
 }
 function ladder(groups){
   return '<div class="ladder">'+groups.map((g,i)=>(i?`<div class="arrow"><svg viewBox="0 0 24 12"><path d="M1 6h20m-5-4 5 4-5 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>${u('neg')}</div>`:'')+
     `<a class="step" href="#${g.id}"><span class="gp">${fx(g.gp)}</span><span class="rg">${fx(g.rg)}</span><span class="dots">${palette(g)}</span><span class="mem" dir="ltr">${g.mem.map(fx).join(' · ')}</span></a>`).join('')+'</div>';
 }
 const arrow=()=>AR?'←':'→';
-function card(ion,id){
+function card(ion,id,g){
   const [ov,ot,tags=[]]=ion.obs;
   return `<article class="card"${typeof id==='string'?` id="${id}"`:''}><div class="ion"><b dir="ltr">${fx(ion.ion)}</b><span>${tr(ion.name)}</span></div>
-   <div class="obs">${draw(ov)}<div><div class="lbl">${u('obs')}</div><p>${fx(ot)}</p>${tags.map(t=>`<span class="tag">${fx(t)}</span>`).join('')}</div></div>
+   <div class="obs">${g?eqHTML(g.id[0]==='a'?{t:'tube',solid:true}:N,parseRg(g.rg).rest,ov):draw(ov)}<div><div class="lbl">${u('obs')}</div><p>${fx(ot)}</p>${tags.map(t=>`<span class="tag">${fx(t)}</span>`).join('')}</div></div>
    ${ion.tests.length?`<div class="ct">${u('ct')} <span class="muted">· ${u('onSoln')}</span></div><ul class="tests">${ion.tests.map(([rg,res,v,n])=>
-     `<li data-c="${colourOf(v)||''}">${draw(v)}${testLine(rg,res,v)}${n?`<small class="tnote">${tr(n)}</small>`:''}</li>`).join('')}</ul>`:''}
+     `<li data-c="${colourOf(v)||''}">${testLine(rg,res,v)}${n?`<small class="tnote">${tr(n)}</small>`:''}</li>`).join('')}</ul>`:''}
    ${ion.note?`<small style="color:var(--muted);font-style:italic">${fx(ion.note)}</small>`:''}</article>`;
 }
 function group(g){
@@ -634,7 +661,7 @@ function group(g){
      <div class="split">${row('PO4{3-}','Phosphate',X(P('W'),N,'BaCl2','+ HCl'),'ppt dissolves')}${row('BO3{3-}','Borate',X(P('W'),N,'BaCl2','+ HCl'),'ppt dissolves')}${row('SO4{2-}','Sulphate',X(P('W'),P('W'),'BaCl2','+ HCl'),'ppt stays (insoluble)')}</div>`;
   } else if(g.end){
     h+=`<div class="end">${g.mem.map(m=>`<span dir="ltr">${fx(m)}</span>`).join('')}</div>`;
-  } else h+=`<div class="grid">${g.ions.map((ion,i)=>card(ion,g.id+'-'+i)).join('')}</div>`;
+  } else h+=`<div class="grid">${g.ions.map((ion,i)=>card(ion,g.id+'-'+i,g)).join('')}</div>`;
   return h+'</div>';
 }
 
@@ -742,9 +769,9 @@ function newQ(){
 }
 function quizRender(){
   const q=pool[quiz.i], ok=quiz.pick===q.ion.ion;
-  let h=`<div class="qv">${draw(q.t[2])}<div><p class="q">${u('quizQ')}</p><p style="margin:6px 0 0">${fx(q.t[0])} ${arrow()} <em>${fx(q.t[1])}</em></p></div></div>
+  let h=`<p class="q">${u('quizQ')}</p><div class="qv">${testLine(q.t[0],q.t[1],q.t[2])}</div>
    <div class="opts">${quiz.opts.map(k=>{let c='opt';if(quiz.pick){if(k===q.ion.ion)c+=' right';else if(k===quiz.pick)c+=' wrong'}
-     return `<button class="${c}" data-k="${k}" ${quiz.pick?'disabled':''}><span><b class="big" dir="ltr">${fx(k)}</b><br><span class="muted">${tr(ionBy[k].name)}</span></span></button>`}).join('')}</div>`;
+     return `<button class="${c}" data-k="${k}" ${quiz.pick?'disabled':''}>${draw(ionBy[k].obs[0])}<span><b class="big" dir="ltr">${fx(k)}</b><br><span class="muted">${tr(ionBy[k].name)}</span></span></button>`}).join('')}</div>`;
   if(quiz.pick) h+=`<p class="q ${ok?'okc':'hitc'}">${ok?u('right'):u('wrong')+' <bdi dir="ltr">'+fx(q.ion.ion)+'</bdi>'} · ${tr(q.ion.name)}، ${fx(q.g.gp)}</p><div class="row"><button class="btn pri" data-a="next">${u('next')}</button></div>`;
   quizBox.innerHTML=h; scoreEl.textContent=`${u('scoreL')}: ${quiz.score} / ${quiz.n}`;
 }
@@ -953,7 +980,7 @@ render=function(){
   baseRender();
   const radicals=[...ACID,...BASE].reduce((n,g)=>n+g.mem.length,0);
   document.getElementById('stats').innerHTML=[[radicals,'statR'],[main.querySelectorAll('.tests li').length,'statT'],[chips.children.length,'statC']]
-    .map(([n,k])=>`<div><b>${n}</b><span>${u(k)}</span></div>`).join('');
+    .map(([n,k],i)=>`<div class="stat"><span class="stic" aria-hidden="true">${[draw(P('Y')),BOTTLE,'<svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="4" fill="#f0c419"/><circle cx="16" cy="9" r="4" fill="#3c9a4c"/><circle cx="12" cy="16" r="4" fill="#d0302b"/></svg>'][i]}</span><div><b>${n}</b><span>${u(k)}</span></div></div>`).join('');
   benchRender(); labRender(); quiz.i===null?newQ():quizRender();
   qIn.placeholder=AR?qIn.dataset.phAr:qIn.dataset.phEn; qIn.setAttribute('aria-label',u('search'));
   themeBtn.setAttribute('aria-label',u('theme'));
