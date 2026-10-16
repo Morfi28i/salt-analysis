@@ -7,33 +7,33 @@
 <meta name="description" content="Interactive guide to qualitative salt analysis: a virtual lab, every confirmatory test drawn as you see it, search, colour finder and quiz. English and Arabic.">
 <meta property="og:title" content="Salt Analysis Bench">
 <meta property="og:description" content="Identify acidic and basic radicals step by step, with every test drawn as you see it in the lab.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M12 4h8M13.5 4v8.5L6.3 25.2A3 3 0 0 0 8.9 29.6h14.2a3 3 0 0 0 2.6-4.4L18.5 12.5V4%22 fill=%22none%22 stroke=%22%233b82ff%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M9.6 20.5h12.8l2 3.8a1.6 1.6 0 0 1-1.4 2.4H9a1.6 1.6 0 0 1-1.4-2.4z%22 fill=%22%233b82ff%22/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M12 4h8M13.5 4v8.5L6.3 25.2A3 3 0 0 0 8.9 29.6h14.2a3 3 0 0 0 2.6-4.4L18.5 12.5V4%22 fill=%22none%22 stroke=%22%230891b2%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M9.6 20.5h12.8l2 3.8a1.6 1.6 0 0 1-1.4 2.4H9a1.6 1.6 0 0 1-1.4-2.4z%22 fill=%22%230891b2%22/%3E%3C/svg%3E">
 <title>Salt Analysis Bench</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
 <style>
 /* Layout: lab bench — each scheme opens with a reagent ladder, then every radical is a card of test tubes showing the real colour you see */
-/* "Bunsen" palette: premium black, electric blue, cyan, flame orange */
+/* premium black and white with a single cyan touch (chosen by the developer) */
 :root{
-  --bg:#ffffff; --surface:#f4f6fb; --ink:#0a0d14; --muted:#5b6475; --line:#e2e6ef;
-  --accent:#1f5fff; --on:#ffffff; --cyan:#0891b2; --amber:#e2560b; --hit:#e0362a; --ok:#0f9f7f;
-  --glass:#4b5468; --liq:#e8f2ff; --salt:#b6b0a5; --edge:#7a8396;
+  --bg:#ffffff; --surface:#f4f4f5; --ink:#000000; --muted:#5f5f66; --line:#e4e4e7;
+  --accent:#000000; --on:#ffffff; --cyan:#0891b2; --amber:#0891b2; --hit:#dc2626; --ok:#15803d;
+  --glass:#52525b; --liq:#e8f4f8; --salt:#b4b0a6; --edge:#71717a;
   --f-display:'Bricolage Grotesque',system-ui,sans-serif;
   --f-body:'Atkinson Hyperlegible',system-ui,sans-serif;
   --f-ar:'IBM Plex Sans Arabic',system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#06070a; --surface:#101217; --ink:#f5f7fa; --muted:#9aa1ad; --line:#22252d;
-  --accent:#3b82ff; --on:#ffffff; --cyan:#22d3ee; --amber:#ff7a1a; --hit:#ff5a48; --ok:#22d3a6;
-  --glass:#cfd5e0; --liq:#1b2233; --salt:#9c968b; --edge:#a7aebb; color-scheme:dark}}
+  --bg:#000000; --surface:#121212; --ink:#ffffff; --muted:#a3a3a3; --line:#262626;
+  --accent:#ffffff; --on:#000000; --cyan:#22d3ee; --amber:#22d3ee; --hit:#ff6b5b; --ok:#4ade80;
+  --glass:#d4d4d8; --liq:#1f2326; --salt:#9c968b; --edge:#a3a3a3; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#06070a; --surface:#101217; --ink:#f5f7fa; --muted:#9aa1ad; --line:#22252d;
-  --accent:#3b82ff; --on:#ffffff; --cyan:#22d3ee; --amber:#ff7a1a; --hit:#ff5a48; --ok:#22d3a6;
-  --glass:#cfd5e0; --liq:#1b2233; --salt:#9c968b; --edge:#a7aebb; color-scheme:dark}
+  --bg:#000000; --surface:#121212; --ink:#ffffff; --muted:#a3a3a3; --line:#262626;
+  --accent:#ffffff; --on:#000000; --cyan:#22d3ee; --amber:#22d3ee; --hit:#ff6b5b; --ok:#4ade80;
+  --glass:#d4d4d8; --liq:#1f2326; --salt:#9c968b; --edge:#a3a3a3; color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:radial-gradient(1000px 520px at 92% -10%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 62%),radial-gradient(860px 480px at -10% 22%,color-mix(in srgb,var(--cyan) 10%,transparent),transparent 60%),radial-gradient(700px 420px at 50% 110%,color-mix(in srgb,var(--amber) 9%,transparent),transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
 [hidden]{display:none!important}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .muted{color:var(--muted)}
@@ -254,7 +254,7 @@ html[dir="rtl"] .mm-g b,html[dir="rtl"] .mm-root,html[dir="rtl"] .mm-branch{font
 html.rv-on .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
 html.rv-on .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html.rv-on .rv{opacity:1;transform:none;transition:none}}
-.progress{position:absolute;inset-inline-start:0;bottom:-1px;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--amber));border-radius:0 3px 3px 0;transition:width .1s linear}
+.progress{position:absolute;inset-inline-start:0;bottom:-1px;height:3px;width:0;background:var(--cyan);border-radius:0 3px 3px 0;transition:width .1s linear}
 .tools{position:relative}
 .palpop{position:absolute;top:calc(100% + 10px);inset-inline-end:0;z-index:30;width:250px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:0 18px 40px -12px #0008;display:grid;gap:4px}
 .palpop h4{margin:2px 6px 6px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
@@ -266,15 +266,15 @@ html.rv-on .rv.in{opacity:1;transform:none}
 .palpop .duo i{width:18px;height:18px;border-radius:50%;border:2px solid var(--surface);display:block}
 .palpop .duo i+i{margin-inline-start:-6px}
 .res em,.tests em,.b-res em,.log em,.qv em,.split .card em{color:var(--ink)!important}
-.mm-col.acid .mm-branch{color:var(--amber)}.mm-col.base .mm-branch{color:var(--cyan)}
+.mm-col.acid .mm-branch{color:var(--ink)}.mm-col.base .mm-branch{color:var(--cyan)}
 .icon-btn .i-sun{display:none}
 html.is-dark .icon-btn .i-sun{display:block}
 html.is-dark .icon-btn .i-moon{display:none}
-h1 span{background:linear-gradient(90deg,var(--accent),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-.btn.pri{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 60%,var(--cyan)));border-color:transparent;box-shadow:0 8px 24px -10px var(--accent)}
+h1 span{color:var(--cyan)}
+.btn.pri{border-color:var(--accent)}
 .dhikr .salah{color:var(--cyan)}
 .eyebrow{color:var(--cyan)}
-.sec-ic{background:color-mix(in srgb,var(--accent) 14%,var(--surface));color:var(--accent)}
+.sec-ic{background:var(--surface);border:1px solid var(--line);color:var(--cyan)}
 .site-foot{border-top:1px solid var(--line);margin-top:64px;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px))}
 .site-foot .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:end;color:var(--muted);font-size:13.5px}
 .foot-main p{margin:8px 0 0;max-width:52ch}
@@ -308,7 +308,7 @@ html[dir="rtl"] .dev-name,html[dir="rtl"] .idea h3{font-weight:700}
 @media (max-width:640px){.site-foot .wrap{grid-template-columns:minmax(0,1fr)}.foot-links{justify-content:flex-start}}
 .site-foot a{color:var(--accent);font-weight:700}
 h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6vw,60px);line-height:1;margin:0;letter-spacing:-.02em;text-wrap:balance}
-h1 span{color:var(--accent)}
+h1 span{color:var(--cyan)}
 .ar{font-family:var(--f-ar);color:var(--muted);font-size:18px;direction:rtl}
 .lede{color:var(--muted);max-width:62ch;margin:6px 0 0}
 .key{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin-top:10px}
@@ -1098,7 +1098,7 @@ function mmLines(){
     const x1=rtl?a.l:a.r, x2=rtl?b.r:b.l, y2=b.cy, mx=(x1+x2)/2;
     return `<path pathLength="1" stroke="${col}" stroke-opacity=".45" stroke-width="1.4" d="M${x1} ${a.cy}C${mx} ${a.cy} ${mx} ${y2} ${x2} ${y2}"/>`};
   let h='';
-  [['acid',ACID,'var(--amber)'],['base',BASE,'var(--cyan)']].forEach(([k,gs,col])=>{
+  [['acid',ACID,'var(--edge)'],['base',BASE,'var(--cyan)']].forEach(([k,gs,col])=>{
     const root=box('mm-root'), br=box('mm-'+k);
     // when the two columns stack (phones), only the first branch hangs from the root
     const firstCol=k==='acid'||document.getElementById('mm-acid').getBoundingClientRect().top>=document.getElementById('mm-base').getBoundingClientRect().top-4;
